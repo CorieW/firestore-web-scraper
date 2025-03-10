@@ -1,0 +1,69 @@
+name: firestore-web-scraper
+version: 0.1.0
+specVersion: v1beta
+
+displayName: Web Scrape with Firestore
+description:
+  A Cloud Firestore extension that can create and perform web scraping tasks.
+
+sourceUrl: https://github.com/CorieW/firestore-web-scraper
+releaseNotesUrl: https://github.com/CorieW/firestore-web-scraper/blob/master/CHANGELOG.md
+
+author:
+  authorName: Corie Watson
+  url: https://github.com/CorieW
+
+billingRequired: true
+
+roles:
+  - role: datastore.user
+    reason:
+      Allows this extension to access Cloud Firestore to read and write
+      scraping-related documents.
+
+resources:
+  - name: processQueue
+    type: firebaseextensions.v1beta.function
+    description:
+      Processes document changes in the specified Cloud Firestore collection,
+      creating and performing web scraping tasks.
+    properties:
+      runtime: nodejs20
+      eventTrigger:
+        eventType: providers/cloud.firestore/eventTypes/document.create
+        resource: projects/${param:PROJECT_ID}/databases/(default)/documents/${param:SCRAPE_COLLECTION}/{id}
+
+params:
+  - param: SCRAPE_COLLECTION
+    label: Scrape documents collection
+    description: >-
+      The collection in which scraping tasks are stored and processed. Each document
+      in this collection should contain the details of the task to be performed. The
+      same document will be updated with the results of the scraping task.
+    type: string
+    default: scraping
+    validationRegex: "^[^/]+(/[^/]+/[^/]+)*$"
+    validationErrorMessage: Must be a valid Cloud Firestore collection
+    required: true
+
+events:
+  - type: firebase.extensions.firestore-web-scraper.v1.onStart
+    description: Occurs when the extension starts execution.
+
+  - type: firebase.extensions.firestore-web-scraper.v1.onProcessing
+    description: Occurs when the extension attempts to process a task.
+
+  - type: firebase.extensions.firestore-web-scraper.v1.onRetry
+    description: Occurs when the extension attempts to retry a task.
+
+  - type: firebase.extensions.firestore-web-scraper.v1.onPending
+    description: Occurs when a task is pending.
+
+  - type: firebase.extensions.firestore-web-scraper.v1.onSuccess
+    description: Occurs when the extension successfully processes a task.
+
+  - type: firebase.extensions.firestore-web-scraper.v1.onComplete
+    description: Occurs when the extension completes execution.
+
+  - type: firebase.extensions.firestore-web-scraper.v1.onError
+    description: Occurs when the extension fails to complete execution.
