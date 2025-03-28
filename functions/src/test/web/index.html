@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Test page for web scraper with listings and various info">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test Page for Web Scraper</title>
+  <style>
+    /* Basic styling for testing */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+    }
+    header {
+      background: #007BFF;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+    }
+    nav ul li {
+      margin: 0 15px;
+    }
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+    .container {
+      padding: 20px;
+    }
+    section {
+      margin-bottom: 30px;
+      background: #fff;
+      padding: 15px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .listing ul {
+      list-style: disc inside;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+    }
+    footer {
+      background: #333;
+      color: #fff;
+      text-align: center;
+      padding: 15px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Test Page for Web Scraper</h1>
+    <nav>
+      <ul>
+        <li><a href="#listings">Listings</a></li>
+        <li><a href="#info">Info</a></li>
+        <li><a href="#data">Data</a></li>
+        <li><a href="#articles">Articles</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <!-- Listings Section -->
+    <section id="listings" class="listing">
+      <h2>Listings</h2>
+      <p>This section contains various listing items:</p>
+      <ul>
+        <li>Listing Item 1 - Description for item 1.</li>
+        <li>Listing Item 2 - Description for item 2.</li>
+        <li>Listing Item 3 - Description for item 3.</li>
+        <li>Listing Item 4 - Description for item 4.</li>
+        <li>Listing Item 5 - Description for item 5.</li>
+      </ul>
+    </section>
+
+    <!-- General Info Section -->
+    <section id="info">
+      <h2>General Information</h2>
+      <p>This page is designed to provide a lot of diverse information for testing purposes. You can find text, images, and links below.</p>
+      <p>For example, here's a link: <a href="https://www.example.com" target="_blank">Visit Example.com</a></p>
+      <img src="https://via.placeholder.com/600x200" alt="Placeholder Image">
+    </section>
+
+    <!-- Data Table Section -->
+    <section id="data">
+      <h2>Data Table</h2>
+      <p>The following table includes sample data to test your scraper's ability to extract tabular information:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>Alpha</td>
+            <td>100</td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Beta</td>
+            <td>200</td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>Gamma</td>
+            <td>300</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Delta</td>
+            <td>400</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Articles Section -->
+    <section id="articles">
+      <h2>Articles</h2>
+      <article>
+        <h3>Article 1: Introduction to Web Scraping</h3>
+        <p>Web scraping is the process of extracting data from websites. It is widely used for data analysis, price comparison, and content aggregation.</p>
+      </article>
+      <article>
+        <h3>Article 2: Tips for Effective Scraping</h3>
+        <p>When scraping a website, it is important to respect the site's robots.txt file and use appropriate request headers to mimic human browsing behavior.</p>
+      </article>
+      <article>
+        <h3>Article 3: Challenges in Web Scraping</h3>
+        <p>Challenges include handling dynamic content, pagination, and ensuring the process doesn't overload the server.</p>
+      </article>
+    </section>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Test Page for Web Scraper.</p>
+  </footer>
+</body>
+</html>
