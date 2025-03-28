@@ -23,14 +23,16 @@ roles:
 
 resources:
   - name: processQueue
-    type: firebaseextensions.v1beta.function
+    type: firebaseextensions.v1beta.v2function
     description:
       Processes document changes in the specified Cloud Firestore collection,
       creating and performing web scraping tasks.
     properties:
-      runtime: nodejs20
+      sourceDirectory: functions
+      buildConfig:
+        runtime: nodejs22
       eventTrigger:
-        eventType: providers/cloud.firestore/eventTypes/document.create
+        eventType: google.cloud.firestore.document.v1.created
         resource: projects/${param:PROJECT_ID}/databases/(default)/documents/${param:SCRAPE_COLLECTION}/{id}
 
 params:

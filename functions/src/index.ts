@@ -1,6 +1,6 @@
 import * as admin from "firebase-admin";
 import { Timestamp } from "firebase-admin/firestore";
-import * as functions from "firebase-functions";
+import { FirestoreEvent, onDocumentCreated, QueryDocumentSnapshot } from "firebase-functions/v2/firestore";
 
 import * as logs from "./logs";
 import config from "./config";
@@ -27,20 +27,18 @@ async function initialize() {
   events.setupEventChannel();
 }
 
-export const processQueue = functions.firestore
-  .document(config.scrapeCollection)
-  .onCreate(
+export const processQueue = onDocumentCreated(config.scrapeCollection,
     async (
-      snapshot: admin.firestore.QueryDocumentSnapshot<Task>,
+      snapshot: FirestoreEvent<QueryDocumentSnapshot>,
     ) => {
       await initialize();
       logs.start();
 
       try {
-        await processWrite(snapshot);
+        await processWrite(snapshot.data);
       } catch (err) {
         await events.recordErrorEvent(
-          snapshot.data(),
+          snapshot.data.data(),
           `Unhandled error occurred during processing: ${err.message}"`
         );
         logs.unhandledError(err);
@@ -55,9 +53,14 @@ export const processQueue = functions.firestore
   );
 
 async function processWrite(
-  snapshot: admin.firestore.QueryDocumentSnapshot<Task>,
+  snapshot: QueryDocumentSnapshot
 ) {
-  const task = snapshot.data();
+  if (!snapshot.exists) {
+    logs.error("Document does not exist");
+    return;
+  }
+
+  const task: Task = snapshot.data() as Task;
   const { url, queries } = applyTaskDefaults(task);
 
   // Get the same document reference
