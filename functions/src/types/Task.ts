@@ -1,4 +1,4 @@
-import { Query, QueryType, TargetType } from "./Query";
+import { Query, TargetType } from "./Query";
 
 export interface Task {
   url: string;            // The target URL for the task.
