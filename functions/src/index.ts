@@ -58,7 +58,6 @@ async function processWrite(
   snapshot: admin.firestore.QueryDocumentSnapshot<Task>,
 ) {
   const task = snapshot.data();
-  const { url, queries } = applyTaskDefaults(task);
 
   // Get the same document reference
   const doc = db.collection(config.scrapeCollection).doc(snapshot.id);
@@ -85,6 +84,8 @@ async function processWrite(
   logs.info(`Processing task: ${snapshot.id}`);
 
   try {
+    const { url, queries } = applyTaskDefaults(task);
+
     // Request the data from the URL
     const queriable = await sendHttpRequestTo(url);
 
