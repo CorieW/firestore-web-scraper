@@ -1,2 +1,17 @@
 .gcloudignore
 !emulator-params.env
+
+# Any files that are private
+*.private
+
+# Environment variables
+*.env
+*.env.development.local
+*.env.test.local
+*.env.production.local
+*.env.development
+*.env.test
+*.env.production
+
+# Required for emulator
+_emulator/extensions/firestore-web-scraper.env.local
