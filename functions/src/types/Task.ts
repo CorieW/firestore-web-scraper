@@ -19,23 +19,12 @@ export function applyTaskDefaults(task: Task): Task {
   };
 }
 
-export function validateTask(task?: Task): boolean {
-  if (!task) {
-    return false;
-  }
-
-  if (!task.url) {
-    return false;
-  }
-
-  if (!task.queries || !task.queries.length) {
-    return false;
-  }
-
-  return true;
-}
-
-export function getTaskValidationErrorMessage(task?: Task): string {
+/**
+ * Validates a task and returns an error message if the task is invalid.
+ * @param task - The task to validate.
+ * @returns An error message if the task is invalid, or null if the task is valid.
+ */
+export function isNotValidTask(task?: Task): string | null {
   if (!task) {
     return "Task is missing";
   }
@@ -44,9 +33,17 @@ export function getTaskValidationErrorMessage(task?: Task): string {
     return "Task URL is missing";
   }
 
-  if (!task.queries || !task.queries.length) {
+  if (!task.queries) {
     return "Task queries are missing";
   }
 
-  return "";
+  if (!Array.isArray(task.queries)) {
+    return "Task queries must be an array";
+  }
+
+  if (task.queries.length === 0) {
+    return "Task queries are empty";
+  }
+
+  return null;
 }

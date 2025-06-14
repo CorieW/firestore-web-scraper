@@ -2,7 +2,8 @@ import { JSDOM, DOMWindow } from 'jsdom';
 import * as xpath from 'xpath';
 
 import { Query, QueryType, TargetType } from "./Query";
-import { info } from '../logs';
+import * as logs from '../logs';
+import { warn } from 'firebase-functions/logger';
 
 export class Queriable {
   private _html: string;
@@ -27,7 +28,8 @@ export class Queriable {
     switch (query.type) {
       case QueryType.XPATH:
         // Run the query using XPath
-        nodes = xpath.select(query.value, this._doc);
+        throw new Error("XPath queries are not supported currently.");
+        // nodes = xpath.select(query.value, this._doc);
         break;
       case QueryType.ID:
         // Searches for an element with a matching id attribute.
@@ -57,8 +59,8 @@ export class Queriable {
     // Handle non-array results (convert to array for consistency)
     const nodeArray = Array.isArray(nodes) ? nodes as Node[] : [nodes as Node];
 
-    info(`Query: ${query.id} - ${nodeArray.length} nodes found.`);
-    info(`Nodes: ${JSON.stringify(nodes)}`);
+    logs.debug(`Query: ${query.id} - ${nodeArray.length} nodes found.`);
+    logs.debug(`Nodes: ${JSON.stringify(nodes)}`);
 
     // Serialize the nodes to strings
     const serializer = new this._window.XMLSerializer();
@@ -66,6 +68,11 @@ export class Queriable {
     let result: string[] = [];
     nodeArray.forEach((node) => {
       if (node === undefined) return; // Skip undefined nodes
+
+      // If the target is not attribute and an attr is defined, warn the user
+      if (query.target !== TargetType.ATTRIBUTE && query.attr) {
+        warn(`${query.id} defines a '${query.target}' target, which does not support 'attr' extraction.`);
+      }
 
       switch (query.target) {
         case TargetType.HTML:

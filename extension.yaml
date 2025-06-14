@@ -1,5 +1,5 @@
 name: firestore-web-scraper
-version: 0.1.0
+version: 0.2.0
 specVersion: v1beta
 
 displayName: Web Scrape with Firestore
@@ -33,9 +33,29 @@ resources:
         runtime: nodejs22
       eventTrigger:
         eventType: google.cloud.firestore.document.v1.created
-        resource: projects/${param:PROJECT_ID}/databases/(default)/documents/${param:SCRAPE_COLLECTION}/{id}
+        triggerRegion: ${param:LOCATION}
+        eventFilters:
+          - attribute: database
+            value: ${param:DATABASE}
+          - attribute: document
+            value: ${param:SCRAPE_COLLECTION}/{documentId}
+            operator: match-path-pattern
 
 params:
+  - param: LOCATION
+    label: Location
+    description: The location of the Cloud Firestore database.
+    type: string
+    default: us-central1
+    required: true
+
+  - param: DATABASE
+    label: Database
+    description: The Firestore database to use. "(default)" is used for the default database.
+    type: string
+    default: (default)
+    required: true
+
   - param: SCRAPE_COLLECTION
     label: Scrape documents collection
     description: >-

@@ -22,6 +22,6 @@ export function complete() {
   logger.log("Completed execution of extension");
 }
 
-export function info(message: string) {
-  logger.info(message);
+export function debug(message: string) {
+  logger.debug(message);
 }
