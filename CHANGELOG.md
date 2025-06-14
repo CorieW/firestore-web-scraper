@@ -3,6 +3,7 @@
 - feat: upgraded to v2 functions
 - feat: allow non-(default) firestore databases
 - feat: added location parameter
+- feat: improved validation
 - fix: removed deprecated `xmldom` dependency, replaced with `@xmldom/xmldom`
 - chore: audit dependencies
 - chore: removed unnecessary packages

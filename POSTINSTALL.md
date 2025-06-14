@@ -26,7 +26,6 @@ Each query in the `queries` array narrows down specific elements from the HTML. 
   - `tag`: Select by HTML tag
   - `attribute`: Select by attribute
   - `text`: Select by text content
-  - `xpath`: Select using XPath
   - `selector`: Select using CSS selector
 - **value** (string, required): Value for the selector
 - **target** (string, optional): What to extract from selected elements
@@ -80,16 +79,6 @@ Selects all `<a>` tags
 }
 ```
 Selects elements with matching attribute
-
-#### XPath Selector
-```json
-{
-  "id": "content",
-  "type": "xpath",
-  "value": "//div[@class='content']"
-}
-```
-Selects elements using XPath expression
 
 #### CSS Selector
 ```json
@@ -150,9 +139,8 @@ Extracts the value of specified attribute from selected elements
   "queries": [
     {
       "id": "title",
-      "type": "xpath",
-      "value": "//title",
-      "target": "text"
+      "type": "tag",
+      "value": "h1"
     },
     {
       "id": "description",
@@ -170,7 +158,7 @@ Extracts the value of specified attribute from selected elements
 }
 ```
 
-Extracts the text content of the `<title>` tag, the text content of the element with class `description`, and the value of the `href` attribute from all `<a>` tags.
+Extracts the text content of the `<h1>` tag, the text content of the element with class `description`, and the value of the `href` attribute from all `<a>` tags.
 
 #### Result Document (After Processing)
 ```json
@@ -179,9 +167,8 @@ Extracts the text content of the `<title>` tag, the text content of the element 
   "queries": [
     {
       "id": "title",
-      "type": "xpath",
-      "value": "//title",
-      "target": "text"
+      "type": "tag",
+      "value": "h1"
     },
     {
       "id": "description",

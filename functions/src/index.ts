@@ -5,7 +5,8 @@ import { FirestoreEvent, onDocumentCreated, QueryDocumentSnapshot } from "fireba
 import * as logs from "./logs";
 import config from "./config";
 import * as events from "./events";
-import { applyTaskDefaults, Task, isNotValidTask } from "./types/Task";
+import { Task } from "./types/Task";
+import { validateTask } from "./validation/task-validation";
 import { sendHttpRequestTo } from "./http";
 import { TaskStage } from "./types/TaskStage";
 
@@ -64,7 +65,7 @@ async function processWrite(
   const doc = db.collection(config.scrapeCollection).doc(snapshot.id);
 
   // The task is invalid, set the error and return
-  const isNotValid = isNotValidTask(task); // is a message (invalid) or null (valid)
+  const isNotValid = validateTask(task); // is a message (invalid) or null (valid)
   if (isNotValid) {
     await doc.update({
       ...task,
@@ -77,7 +78,7 @@ async function processWrite(
     return;
   }
 
-  const { url, queries } = applyTaskDefaults(task);
+  const { url, queries } = task;
 
   // Set the task to processing
   await doc.update({

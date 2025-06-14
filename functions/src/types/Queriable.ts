@@ -1,9 +1,9 @@
 import { JSDOM, DOMWindow } from 'jsdom';
-import * as xpath from 'xpath';
+// import * as xpath from 'xpath';
 
 import { Query, QueryType, TargetType } from "./Query";
 import * as logs from '../logs';
-import { warn } from 'firebase-functions/logger';
+import { validateQuery } from '../validation/query-validation';
 
 export class Queriable {
   private _html: string;
@@ -23,14 +23,12 @@ export class Queriable {
   }
 
   query(query: Query): string[] | string {
+    // Validate the query before processing
+    validateQuery(query);
+
     let nodes = null;
 
     switch (query.type) {
-      case QueryType.XPATH:
-        // Run the query using XPath
-        throw new Error("XPath queries are not supported currently.");
-        // nodes = xpath.select(query.value, this._doc);
-        break;
       case QueryType.ID:
         // Searches for an element with a matching id attribute.
         nodes = this._doc.getElementById(query.value);
@@ -45,7 +43,6 @@ export class Queriable {
         break;
       case QueryType.ATTRIBUTE:
         // Searches for elements that have a specified attribute.
-        // Here, query.value is assumed to be the attribute name.
         nodes = this.convertToArray(this._doc.querySelectorAll(`[${query.value}]`));
         break;
       case QueryType.SELECTOR:
@@ -69,11 +66,6 @@ export class Queriable {
     nodeArray.forEach((node) => {
       if (node === undefined) return; // Skip undefined nodes
 
-      // If the target is not attribute and an attr is defined, warn the user
-      if (query.target !== TargetType.ATTRIBUTE && query.attr) {
-        warn(`${query.id} defines a '${query.target}' target, which does not support 'attr' extraction.`);
-      }
-
       switch (query.target) {
         case TargetType.HTML:
           // Retrieve the HTML content of the node
@@ -85,16 +77,11 @@ export class Queriable {
           break;
         case TargetType.TEXT:
           // Retrieve the text content of the node
-          result.push(
-            (node as Element).textContent
-          );
+          result.push((node as Element).textContent);
           break;
         case TargetType.ATTRIBUTE:
-          // If the attribute name is not provided, throw an error
-          if (!query.attr) throw new Error("Attribute name required");
-
           // Retrieve the attribute value
-          const attrValue = (node as Element).getAttribute(query.attr);
+          const attrValue = (node as Element).getAttribute(query.attr!);
           result.push(attrValue || "");
           break;
         default:
@@ -123,5 +110,4 @@ export class Queriable {
     }
     return array;
   }
-
 }
