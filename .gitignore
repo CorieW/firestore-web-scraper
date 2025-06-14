@@ -2,7 +2,7 @@
 !emulator-params.env
 
 # Any files that are private
-*.private
+project.private/
 
 # Environment variables
 *.env
