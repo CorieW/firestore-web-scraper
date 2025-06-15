@@ -1,6 +1,20 @@
 import { ATTRIBUTE_KEY, ID_KEY, Query, QueryType, TARGET_KEY, TargetType, TYPE_KEY, VALUE_KEY } from "../types/Query";
 import { warn } from 'firebase-functions/logger';
 
+/**
+ * @throws Error - when validation fails.
+ */
+export function validateQueries(queries: Query[]) {
+  queries.forEach((query) => {
+    validateQuery(query);
+  })
+}
+
+/**
+ * Validates a query.
+ * @param query - The query to validate.
+ * @throws Error - When validation fails. Includes an appropriate validation failure message.
+ */
 export function validateQuery(query: Query): void {
   if (typeof query !== 'object') {
     throw new Error("Query must be provided as an object (or of type 'map')");

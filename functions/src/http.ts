@@ -1,5 +1,3 @@
-import { Queriable } from "./types/Queriable";
-
 async function fetchHtml(url: string): Promise<string> {
   try {
     const response = await fetch(url);
@@ -14,10 +12,7 @@ async function fetchHtml(url: string): Promise<string> {
   }
 }
 
-export async function sendHttpRequestTo(url: string): Promise<Queriable> {
+export async function sendHttpRequestTo(url: string): Promise<string> {
   // Send the HTTP request
-  const response = await fetchHtml(url);
-
-  // Return the Queriable object
-  return new Queriable(response);
+  return await fetchHtml(url);
 }

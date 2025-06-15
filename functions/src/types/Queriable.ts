@@ -3,29 +3,33 @@ import { JSDOM, DOMWindow } from 'jsdom';
 
 import { Query, QueryType, TargetType } from "./Query";
 import * as logs from '../logs';
-import { validateQuery } from '../validation/query-validation';
 
 export class Queriable {
   private _html: string;
+
   private _window: DOMWindow;
   private _doc: Document;
 
   constructor(html: string) {
     this._html = html;
+
     // Parse the HTML using JSDOM
-    const dom = new JSDOM(html);
+    const dom = new JSDOM(this._html);
+
     this._window = dom.window;
-    this._doc = this._window.document;
+    this._doc = window.document;
   }
 
-  get html(): string {
-    return this._html;
+  /**
+   * Parses the HTML for data (based on queries) and outputs it.
+   * @returns Data from the queries.
+   */
+  query(queries: Query[]): { [key: string]: string[] | string } {
+    // Run all queries
+    return this.multiQuery(queries);
   }
 
-  query(query: Query): string[] | string {
-    // Validate the query before processing
-    validateQuery(query);
-
+  private querySingle(query: Query): string[] | string {
     let nodes = null;
 
     switch (query.type) {
@@ -49,8 +53,6 @@ export class Queriable {
         // Searches for elements using a CSS selector.
         nodes = this.convertToArray(this._doc.querySelectorAll(query.value));
         break;
-      default:
-        throw new Error("Invalid query type.");
     }
 
     // Handle non-array results (convert to array for consistency)
@@ -84,8 +86,6 @@ export class Queriable {
           const attrValue = (node as Element).getAttribute(query.attr!);
           result.push(attrValue || "");
           break;
-        default:
-          throw new Error("Invalid target type.");
       }
     });
 
@@ -93,11 +93,11 @@ export class Queriable {
     return result.length === 1 ? result[0] : result;
   }
 
-  multiQuery(queries: Query[]): { [key: string]: string[] | string } {
+  private multiQuery(queries: Query[]): { [key: string]: string[] | string } {
     let results: { [key: string]: string[] | string } = {};
 
     queries.forEach((query) => {
-      results[query.id] = this.query(query);
+      results[query.id] = this.querySingle(query);
     });
 
     return results;

@@ -1,5 +1,7 @@
 export enum TaskStage {
-  PROCESSING = 'Processing',
+  VALIDATING = 'Validating',
+  FETCHING = 'Fetching',
+  QUERYING = 'Querying',
   SUCCESS = 'Success',
   ERROR = 'Error',
 }

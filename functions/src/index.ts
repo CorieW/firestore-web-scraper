@@ -5,10 +5,12 @@ import { FirestoreEvent, onDocumentCreated, QueryDocumentSnapshot } from "fireba
 import * as logs from "./logs";
 import config from "./config";
 import * as events from "./events";
-import { Task } from "./types/Task";
+import { QUERIES_KEY, Task, URL_KEY } from "./types/Task";
 import { validateTask } from "./validation/task-validation";
 import { sendHttpRequestTo } from "./http";
 import { TaskStage } from "./types/TaskStage";
+import { Queriable } from "./types/Queriable";
+import { validateQueries } from "./validation/query-validation";
 
 logs.init();
 
@@ -64,37 +66,72 @@ async function processWrite(
   const task: Task = snapshot.data() as Task;
   const doc = db.collection(config.scrapeCollection).doc(snapshot.id);
 
-  // The task is invalid, set the error and return
-  const isNotValid = validateTask(task); // is a message (invalid) or null (valid)
-  if (isNotValid) {
-    await doc.update({
-      ...task,
-      error: isNotValid,
-      timestamp: Timestamp.now(),
-      stage: TaskStage.ERROR
-    });
-    logs.error(isNotValid);
-
-    return;
-  }
-
-  const { url, queries } = task;
-
+  logs.debug(`Validating task: ${snapshot.id}`);
   // Set the task to processing
   await doc.update({
     ...task,
-    stage: TaskStage.PROCESSING,
+    stage: TaskStage.VALIDATING,
     timestamp: Timestamp.now(),
   });
-  logs.debug(`Processing task: ${snapshot.id}`);
 
   try {
-    // Request the data from the URL
-    const queriable = await sendHttpRequestTo(url);
+    // Validates the base task properties
+    validateTask(task);
 
-    logs.debug(`Received data from ${url}: ${queriable.html}`);
+    // Validates each query
+    validateQueries(task[QUERIES_KEY])
+  } catch (err) {
+    // Something went wrong, set the error and return
+    await doc.update({
+      ...task,
+      error: err.toString().replace(/^Error: /, ''),
+      timestamp: Timestamp.now(),
+      stage: TaskStage.ERROR,
+    });
+
+    await events.recordErrorEvent(snapshot, err);
+    logs.unhandledError(err);
+  }
+
+  const url = task[URL_KEY];
+  const queries = task[QUERIES_KEY];
+
+  logs.debug(`Fetching HTML: ${snapshot.id}`);
+  await doc.update({
+    ...task,
+    stage: TaskStage.FETCHING,
+    timestamp: Timestamp.now(),
+  });
+
+  let html = null;
+  try {
+    // Request the data from the URL
+    html = await sendHttpRequestTo(url);
+
+    logs.debug(`Received data from ${url}`);
+  } catch (err) {
+    // Something went wrong, set the error and return
+    await doc.update({
+      ...task,
+      error: err.toString(),
+      timestamp: Timestamp.now(),
+      stage: TaskStage.ERROR,
+    });
+
+    await events.recordErrorEvent(snapshot, err);
+    logs.unhandledError(err);
+  }
+
+  logs.debug(`Querying HTML: ${snapshot.id}`);
+  await doc.update({
+    ...task,
+    stage: TaskStage.QUERYING,
+    timestamp: Timestamp.now(),
+  });
+
+  try {
     // Run the queries on the data
-    const data = queriable.multiQuery(queries);
+    const data = new Queriable(html).query(queries)
 
     // Set the data in the Firestore document
     await doc.update({
@@ -109,7 +146,7 @@ async function processWrite(
     // Something went wrong, set the error and return
     await doc.update({
       ...task,
-      error: err.toString().replace(/^Error: /, ''),
+      error: err.toString(),
       timestamp: Timestamp.now(),
       stage: TaskStage.ERROR,
     });
