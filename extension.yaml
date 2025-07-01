@@ -1,5 +1,5 @@
 name: firestore-web-scraper
-version: 0.2.0
+version: 0.1.0
 specVersion: v1beta
 
 displayName: Web Scrape with Firestore
@@ -12,6 +12,10 @@ releaseNotesUrl: https://github.com/CorieW/firestore-web-scraper/blob/master/CHA
 author:
   authorName: Corie Watson
   url: https://github.com/CorieW
+
+icon: icon.png
+
+tags: [utilities]
 
 billingRequired: true
 
