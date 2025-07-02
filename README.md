@@ -1,6 +1,12 @@
-# Firestore Web Scraper
+<p align="center">
+  <img src="banner.png" alt="banner" height="275"/>
+</p>
 
-This is a web scraper that is configured via Firestore. You can create scraping tasks in the form of documents in a Firestore collection. The scraper will then scrape the website and extract the data based on the queries you define in the task document.
+<hr/>
+
+## About
+
+This extension lets you automate web scraping tasks using Firestore. Simply add a document to a designated Firestore collection describing the website to scrape and the data to extract. The extension will process the task, perform the scraping, and update the document with the results, all managed directly from Firestore.
 
 ## Usage
 
