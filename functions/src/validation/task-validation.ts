@@ -1,4 +1,4 @@
-import { Task } from "../types/Task";
+import { Task } from '../types/Task';
 
 /**
  * Validates a task and returns an error message if the task is invalid.
@@ -7,7 +7,7 @@ import { Task } from "../types/Task";
  */
 export function validateTask(task?: Task): string | null {
   if (!task) {
-    return "Task is missing";
+    return 'Task is missing';
   }
 
   if (!task.url) {

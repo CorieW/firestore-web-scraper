@@ -1,25 +1,23 @@
-import { logger } from "firebase-functions";
+import { logger } from 'firebase-functions';
 
 export function init() {
-  logger.log("Initializing extension");
+  logger.log('Initializing extension');
 }
 
 export function start() {
-  logger.log(
-    "Started execution of extension",
-  );
+  logger.log('Started execution of extension');
 }
 
 export function error(err: string | Error) {
-  logger.error("Error occurred during processing:", err);
+  logger.error('Error occurred during processing:', err);
 }
 
 export function unhandledError(err: Error) {
-  logger.log("Unhandled error occurred during processing:", err);
+  logger.log('Unhandled error occurred during processing:', err);
 }
 
 export function complete() {
-  logger.log("Completed execution of extension");
+  logger.log('Completed execution of extension');
 }
 
 export function debug(message: string) {

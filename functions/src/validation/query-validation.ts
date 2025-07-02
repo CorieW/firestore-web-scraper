@@ -1,13 +1,13 @@
-import { Query, QueryType, TargetType } from "../types/Query";
+import { Query, QueryType, TargetType } from '../types/Query';
 import { warn } from 'firebase-functions/logger';
 
 export function validateQuery(query: Query): void {
   if (!query) {
-    throw new Error("Query is missing");
+    throw new Error('Query is missing');
   }
 
   if (Object.keys(query).length === 0) {
-    throw new Error("Query is empty");
+    throw new Error('Query is empty');
   }
 
   if (typeof query !== 'object') {
@@ -46,7 +46,9 @@ function validateQueryType(query: Query): void {
   }
 
   if (!Object.values(QueryType).includes(query.type)) {
-    throw new Error(`Invalid query type ('type'): '${query.type}'. Valid types are: ${Object.values(QueryType).join(', ')}`);
+    throw new Error(
+      `Invalid query type ('type'): '${query.type}'. Valid types are: ${Object.values(QueryType).join(', ')}`
+    );
   }
 
   if (query.type === QueryType.XPATH) {
@@ -64,7 +66,9 @@ function validateTargetType(query: Query): void {
   }
 
   if (!Object.values(TargetType).includes(query.target)) {
-    throw new Error(`Invalid target type ('target'): '${query.target}'. Valid types are: ${Object.values(TargetType).join(', ')}`);
+    throw new Error(
+      `Invalid target type ('target'): '${query.target}'. Valid types are: ${Object.values(TargetType).join(', ')}`
+    );
   }
 }
 
@@ -75,7 +79,9 @@ function validateAttributeExtraction(query: Query): void {
 
   // If the target is not attribute and an attr is defined, warn the user
   if (query.target !== TargetType.ATTRIBUTE) {
-    warn(`${query.id} defines a '${query.target}' target, which does not support 'attr' extraction.`);
+    warn(
+      `${query.id} defines a '${query.target}' target, which does not support 'attr' extraction.`
+    );
   }
 
   if (typeof query.attr !== 'string') {

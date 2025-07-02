@@ -1,9 +1,9 @@
 export interface Query {
-  id: string;         // Unique identifier for the query.
-  type: QueryType;    // Type of query to run.
-  value: string;      // Value to use for the query.
+  id: string; // Unique identifier for the query.
+  type: QueryType; // Type of query to run.
+  value: string; // Value to use for the query.
   target?: TargetType; // Type of data to extract.
-  attr?: string;       // (Optional) Attribute to extract.
+  attr?: string; // (Optional) Attribute to extract.
 }
 
 export enum QueryType {
