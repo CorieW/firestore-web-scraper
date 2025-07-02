@@ -1,4 +1,4 @@
-import { Queriable } from "./types/Queriable";
+import { Queriable } from './types/Queriable';
 
 async function fetchHtml(url: string): Promise<string> {
   try {
@@ -9,7 +9,7 @@ async function fetchHtml(url: string): Promise<string> {
     const html = await response.text();
     return html;
   } catch (error) {
-    console.error("Error fetching HTML:", error);
+    console.error('Error fetching HTML:', error);
     throw error;
   }
 }

@@ -1,7 +1,7 @@
 import { JSDOM, DOMWindow } from 'jsdom';
 // import * as xpath from 'xpath';
 
-import { Query, QueryType, TargetType } from "./Query";
+import { Query, QueryType, TargetType } from './Query';
 import * as logs from '../logs';
 import { validateQuery } from '../validation/query-validation';
 
@@ -50,11 +50,11 @@ export class Queriable {
         nodes = this.convertToArray(this._doc.querySelectorAll(query.value));
         break;
       default:
-        throw new Error("Invalid query type.");
+        throw new Error('Invalid query type.');
     }
 
     // Handle non-array results (convert to array for consistency)
-    const nodeArray = Array.isArray(nodes) ? nodes as Node[] : [nodes as Node];
+    const nodeArray = Array.isArray(nodes) ? (nodes as Node[]) : [nodes as Node];
 
     logs.debug(`Query: ${query.id} - ${nodeArray.length} nodes found.`);
     logs.debug(`Nodes: ${JSON.stringify(nodes)}`);
@@ -82,10 +82,10 @@ export class Queriable {
         case TargetType.ATTRIBUTE:
           // Retrieve the attribute value
           const attrValue = (node as Element).getAttribute(query.attr!);
-          result.push(attrValue || "");
+          result.push(attrValue || '');
           break;
         default:
-          throw new Error("Invalid target type.");
+          throw new Error('Invalid target type.');
       }
     });
 
