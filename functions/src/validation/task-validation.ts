@@ -1,4 +1,4 @@
-import { Task } from "../types/Task";
+import { QUERIES_KEY, Task, URL_KEY } from "../types/Task";
 
 /**
  * Validates a task and returns an error message if the task is invalid.
@@ -10,30 +10,22 @@ export function validateTask(task?: Task): string | null {
     return "Task is missing";
   }
 
-  if (!task.url) {
-    return "Task URL ('url') is missing";
-  }
-
-  if (typeof task.url !== 'string') {
-    return "Task URL ('url') must be a string";
+  if (typeof task[URL_KEY] !== 'string') {
+    return `Task URL ('${URL_KEY}') must be provided as a string`;
   }
 
   try {
-    new URL(task.url);
+    new URL(task[URL_KEY]);
   } catch (error) {
-    return "Task URL ('url') is not a valid URL";
+    return `Task URL ('${URL_KEY}') is not a valid URL`;
   }
 
-  if (!task.queries) {
-    return "Task queries ('queries') are missing";
+  if (!Array.isArray(task[QUERIES_KEY])) {
+    return `Task queries ('${QUERIES_KEY}') must be provided as an array`;
   }
 
-  if (!Array.isArray(task.queries)) {
-    return "Task queries ('queries') must be an array";
-  }
-
-  if (task.queries.length === 0) {
-    return "Task queries ('queries') are empty";
+  if (task[QUERIES_KEY].length === 0) {
+    return `Task queries ('${QUERIES_KEY}') are empty`;
   }
 
   return null;
