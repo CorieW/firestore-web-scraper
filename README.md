@@ -1,8 +1,10 @@
-# Firestore Web Scraper
-
 <p align="center">
-  <img src="icon.png" alt="icon" width="256" height="256" />
+  <img src="banner.png" alt="banner" height="275"/>
 </p>
+
+<hr/>
+
+## About
 
 This is a web scraper that is configured via Firestore. You can create scraping tasks in the form of documents in a Firestore collection. The scraper will then scrape the website and extract the data based on the queries you define in the task document.
 
