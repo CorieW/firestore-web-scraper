@@ -1,4 +1,5 @@
 import { QUERIES_KEY, Task, URL_KEY } from "../types/Task";
+import { QUERIES_KEY, Task, URL_KEY } from "../types/Task";
 
 /**
  * Validates a task.
@@ -15,6 +16,7 @@ export function validateTask(task?: Task) {
   }
 
   try {
+    new URL(task[URL_KEY]);
     new URL(task[URL_KEY]);
   } catch (error) {
     throw new Error(`Task URL ('${URL_KEY}') is not a valid URL`);

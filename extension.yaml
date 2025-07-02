@@ -13,6 +13,10 @@ author:
   authorName: Corie Watson
   url: https://github.com/CorieW
 
+icon: icon.png
+
+tags: [utilities]
+
 billingRequired: true
 
 roles:
