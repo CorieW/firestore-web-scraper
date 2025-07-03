@@ -1,5 +1,7 @@
 # Pre-Installation Guide
 
+Use this extension to create and perform web scraping tasks on a website.
+
 This guide will help you install and configure this extension in your Firebase project.
 
 ## Billing
@@ -9,28 +11,28 @@ To install an extension, your project must be on the [Blaze (pay as you go) plan
 
 ### **Step 1: Install the Extension**
 
-You can install this extension locally by running the following commands:
-
-   ```bash
-   git clone https://github.com/CorieW/firestore-web-scraper.git
-   firebase ext:install ./firestore-web-scraper
-   ```
-
-In the future, this extension could be published to the Firebase Extensions registry for easier installation.
-
 ### **Step 2: Configure the Extension**
 
 After installing the extension, you need setup the configuration in your Firebase project. The configuration includes the following parameters:
 
-| Parameter       | Description             |
-|-----------------|-------------------------|
-| `scrapeCollection` | The collection in which scraping tasks are stored and processed. Each document in this collection should contain the details of the task to be performed. The same document will be updated with the results of the scraping task. |
+**Configuration Parameters:**
+
+- **location**:
+  The location of the Firestore database to use.
+
+- **database**:
+  The name of the Firestore database to use.
+
+- **scrapeCollection**:
+  The collection in which scraping tasks are stored and processed. Each document in this collection should contain the details of the task to be performed. The same document will be updated with the results of the scraping task.
 
 
 **Example Configuration:**
 
 ```json
 {
+  "location": "us-central1",
+  "database": "(default)",
   "scrapeCollection": "tasks",
 }
 ```

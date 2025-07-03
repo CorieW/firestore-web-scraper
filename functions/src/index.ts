@@ -1,11 +1,12 @@
 import * as admin from "firebase-admin";
 import { Timestamp } from "firebase-admin/firestore";
-import * as functions from "firebase-functions";
+import { FirestoreEvent, onDocumentCreated, QueryDocumentSnapshot } from "firebase-functions/v2/firestore";
 
 import * as logs from "./logs";
 import config from "./config";
 import * as events from "./events";
-import { applyTaskDefaults, getTaskValidationErrorMessage, Task, validateTask } from "./types/Task";
+import { Task } from "./types/Task";
+import { validateTask } from "./validation/task-validation";
 import { sendHttpRequestTo } from "./http";
 import { TaskStage } from "./types/TaskStage";
 
@@ -27,20 +28,18 @@ async function initialize() {
   events.setupEventChannel();
 }
 
-export const processQueue = functions.firestore
-  .document(config.scrapeCollection)
-  .onCreate(
+export const processQueue = onDocumentCreated(config.scrapeCollection,
     async (
-      snapshot: admin.firestore.QueryDocumentSnapshot<Task>,
+      snapshot: FirestoreEvent<QueryDocumentSnapshot>,
     ) => {
       await initialize();
       logs.start();
 
       try {
-        await processWrite(snapshot);
+        await processWrite(snapshot.data);
       } catch (err) {
         await events.recordErrorEvent(
-          snapshot.data(),
+          snapshot.data.data(),
           `Unhandled error occurred during processing: ${err.message}"`
         );
         logs.unhandledError(err);
@@ -55,40 +54,47 @@ export const processQueue = functions.firestore
   );
 
 async function processWrite(
-  snapshot: admin.firestore.QueryDocumentSnapshot<Task>,
+  snapshot: QueryDocumentSnapshot
 ) {
-  const task = snapshot.data();
-  const { url, queries } = applyTaskDefaults(task);
+  if (!snapshot.exists) {
+    logs.error("Document does not exist");
+    return;
+  }
 
-  // Get the same document reference
+  const startedAtTimestamp = Timestamp.now();
+  const task: Task = snapshot.data() as Task;
   const doc = db.collection(config.scrapeCollection).doc(snapshot.id);
 
   // The task is invalid, set the error and return
-  if (!validateTask(task)) {
+  const isNotValid = validateTask(task); // is a message (invalid) or null (valid)
+  if (isNotValid) {
     await doc.update({
       ...task,
-      error: getTaskValidationErrorMessage(task),
-      timestamp: Timestamp.now(),
+      error: isNotValid,
+      startedAt: startedAtTimestamp,
+      concludedAt: Timestamp.now(),
       stage: TaskStage.ERROR
     });
-    logs.error(getTaskValidationErrorMessage(task));
+    logs.error(isNotValid);
 
     return;
   }
 
+  const { url, queries } = task;
+
   // Set the task to processing
   await doc.update({
     ...task,
+    startedAt: startedAtTimestamp,
     stage: TaskStage.PROCESSING,
-    timestamp: Timestamp.now(),
   });
-  logs.info(`Processing task: ${snapshot.id}`);
+  logs.debug(`Processing task: ${snapshot.id}`);
 
   try {
     // Request the data from the URL
     const queriable = await sendHttpRequestTo(url);
 
-    logs.info(`Received data from ${url}: ${queriable.html}`);
+    logs.debug(`Received data from ${url}: ${queriable.html}`);
     // Run the queries on the data
     const data = queriable.multiQuery(queries);
 
@@ -96,17 +102,19 @@ async function processWrite(
     await doc.update({
       ...task,
       data: { ...data },
-      timestamp: Timestamp.now(),
+      startedAt: startedAtTimestamp,
+      concludedAt: Timestamp.now(),
       stage: TaskStage.SUCCESS,
     });
 
-    logs.info(`Task successful: ${snapshot.id}`);
+    logs.debug(`Task successful: ${snapshot.id}`);
   } catch (err) {
     // Something went wrong, set the error and return
     await doc.update({
       ...task,
-      error: err.toString(),
-      timestamp: Timestamp.now(),
+      error: err.toString().replace(/^Error: /, ''),
+      startedAt: startedAtTimestamp,
+      concludedAt: Timestamp.now(),
       stage: TaskStage.ERROR,
     });
 
