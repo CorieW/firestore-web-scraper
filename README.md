@@ -10,7 +10,7 @@ This extension lets you automate web scraping tasks using Firestore. Simply add 
 
 ## Usage
 
-You can read PREINSTALL.md and POSTINSTALL.md for more detailed instructions on how to use this extension.
+You can read [PREINSTALL.md](https://github.com/CorieW/firestore-web-scraper/blob/master/PREINSTALL.md) and [POSTINSTALL.md](https://github.com/CorieW/firestore-web-scraper/blob/master/POSTINSTALL.md) for more detailed instructions on how to use this extension.
 
 ## Installation
 
