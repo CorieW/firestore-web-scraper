@@ -192,10 +192,12 @@ Extracts the text content of the `<h1>` tag, the text content of the element wit
     }
   ],
   "data": {
-    "title": "Example Domain",
-    "description": "<p>This domain is for use in illustrative examples...</p>",
+    "title": ["Example Domain"],
+    "description": ["<p>This domain is for use in illustrative examples...</p>"],
     "links": ["https://www.iana.org/domains/example", "https://www.iana.org/domains/reserved"]
   },
-  "timestamp": "2023-01-01T00:00:00Z"
+  "startedAt": "2023-01-01T00:00:00Z",
+  "concludedAt": "2023-01-01T00:00:00Z",
+  "stage": "Success"
 }
 ```
