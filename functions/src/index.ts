@@ -2,15 +2,13 @@ import * as admin from "firebase-admin";
 import { Timestamp } from "firebase-admin/firestore";
 import { FirestoreEvent, onDocumentCreated, QueryDocumentSnapshot } from "firebase-functions/v2/firestore";
 
-import * as logs from "./logs";
+import { logger } from "./logger";
 import config from "./config";
 import * as events from "./events";
 import { Task } from "./types/Task";
 import { validateTask } from "./validation/task-validation";
 import { sendHttpRequestTo } from "./http";
 import { TaskStage } from "./types/TaskStage";
-
-logs.init();
 
 let db: admin.firestore.Firestore;
 let initialized = false;
@@ -33,7 +31,7 @@ export const processQueue = onDocumentCreated(config.scrapeCollection,
       snapshot: FirestoreEvent<QueryDocumentSnapshot>,
     ) => {
       await initialize();
-      logs.start();
+      logger.debug("Processing queue");
 
       try {
         await processWrite(snapshot.data);
@@ -42,14 +40,14 @@ export const processQueue = onDocumentCreated(config.scrapeCollection,
           snapshot.data.data(),
           `Unhandled error occurred during processing: ${err.message}"`
         );
-        logs.unhandledError(err);
+        logger.error(err);
         return null;
       }
 
       /** record complete event */
       await events.recordCompleteEvent(snapshot);
 
-      logs.complete();
+      logger.debug("Queue processed");
     }
   );
 
@@ -57,12 +55,16 @@ async function processWrite(
   snapshot: QueryDocumentSnapshot
 ) {
   if (!snapshot.exists) {
-    logs.error("Document does not exist");
+    logger.error("Process called with non-existent document");
     return;
   }
 
+  logger.info(`Starting task: ${snapshot.id}`);
+
   const task: Task = snapshot.data() as Task;
   const doc = db.collection(config.scrapeCollection).doc(snapshot.id);
+
+  logger.info(`Validating task: ${snapshot.id}`);
 
   // The task is invalid, set the error and return
   const isNotValid = validateTask(task); // is a message (invalid) or null (valid)
@@ -73,7 +75,6 @@ async function processWrite(
       timestamp: Timestamp.now(),
       stage: TaskStage.ERROR
     });
-    logs.error(isNotValid);
 
     return;
   }
@@ -81,18 +82,18 @@ async function processWrite(
   const { url, queries } = task;
 
   // Set the task to processing
+  logger.info(`Processing task: ${snapshot.id}`);
   await doc.update({
     ...task,
     stage: TaskStage.PROCESSING,
     timestamp: Timestamp.now(),
   });
-  logs.debug(`Processing task: ${snapshot.id}`);
 
   try {
     // Request the data from the URL
     const queriable = await sendHttpRequestTo(url);
 
-    logs.debug(`Received data from ${url}: ${queriable.html}`);
+    logger.debug(`Received data from ${url}: ${queriable.html}`);
     // Run the queries on the data
     const data = queriable.multiQuery(queries);
 
@@ -103,8 +104,6 @@ async function processWrite(
       timestamp: Timestamp.now(),
       stage: TaskStage.SUCCESS,
     });
-
-    logs.debug(`Task successful: ${snapshot.id}`);
   } catch (err) {
     // Something went wrong, set the error and return
     await doc.update({
@@ -115,6 +114,8 @@ async function processWrite(
     });
 
     await events.recordErrorEvent(snapshot, err);
-    logs.unhandledError(err);
+    logger.error(err);
   }
+
+  logger.info(`Task successful: ${snapshot.id}`);
 }
