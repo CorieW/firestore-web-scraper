@@ -61,6 +61,7 @@ async function processWrite(
 
   logger.info(`Starting task: ${snapshot.id}`);
 
+  const startedAtTimestamp = Timestamp.now();
   const task: Task = snapshot.data() as Task;
   const doc = db.collection(config.scrapeCollection).doc(snapshot.id);
 
@@ -72,7 +73,8 @@ async function processWrite(
     await doc.update({
       ...task,
       error: isNotValid,
-      timestamp: Timestamp.now(),
+      startedAt: startedAtTimestamp,
+      concludedAt: Timestamp.now(),
       stage: TaskStage.ERROR
     });
 
@@ -85,8 +87,8 @@ async function processWrite(
   logger.info(`Processing task: ${snapshot.id}`);
   await doc.update({
     ...task,
+    startedAt: startedAtTimestamp,
     stage: TaskStage.PROCESSING,
-    timestamp: Timestamp.now(),
   });
 
   try {
@@ -101,7 +103,8 @@ async function processWrite(
     await doc.update({
       ...task,
       data: { ...data },
-      timestamp: Timestamp.now(),
+      startedAt: startedAtTimestamp,
+      concludedAt: Timestamp.now(),
       stage: TaskStage.SUCCESS,
     });
   } catch (err) {
@@ -109,7 +112,8 @@ async function processWrite(
     await doc.update({
       ...task,
       error: err.toString().replace(/^Error: /, ''),
-      timestamp: Timestamp.now(),
+      startedAt: startedAtTimestamp,
+      concludedAt: Timestamp.now(),
       stage: TaskStage.ERROR,
     });
 

@@ -10,18 +10,25 @@ export function validateQuery(query: Query): void {
     throw new Error("Query is empty");
   }
 
+  validateQueryId(query);
+  validateQueryType(query);
+  validateQueryValue(query);
+  validateTargetType(query);
+  validateAttributeExtraction(query);
+}
+
+function validateQueryId(query: Query): void {
   if (typeof query[ID_KEY] !== 'string') {
     throw new Error(`Query ID ('${ID_KEY}') must be provided as a string`);
   }
 
-  validateQueryType(query);
-
-  if (typeof query[VALUE_KEY] !== 'string') {
-    throw new Error(`Query value ('${VALUE_KEY}') must be provided as a string`);
+  if (query[ID_KEY] === '') {
+    throw new Error(`Query ID ('${ID_KEY}') cannot be an empty string`);
   }
 
-  validateTargetType(query);
-  validateAttributeExtraction(query);
+  if (query[ID_KEY].trim() === '') {
+    throw new Error(`Query ID ('${ID_KEY}') cannot be a whitespace-only string`);
+  }
 }
 
 function validateQueryType(query: Query): void {
@@ -36,6 +43,20 @@ function validateQueryType(query: Query): void {
   // TODO: Remove when supported
   if (query[TYPE_KEY] === QueryType.XPATH) {
     throw new Error(`Query type ('${TYPE_KEY}') cannot be 'xpath'. This is not supported currently.`);
+  }
+}
+
+function validateQueryValue(query: Query): void {
+  if (typeof query[VALUE_KEY] !== 'string') {
+    throw new Error(`Query value ('${VALUE_KEY}') must be provided as a string`);
+  }
+
+  if (query[VALUE_KEY] === '') {
+    throw new Error(`Query value ('${VALUE_KEY}') cannot be an empty string`);
+  }
+
+  if (query[VALUE_KEY].trim() === '') {
+    throw new Error(`Query value ('${VALUE_KEY}') cannot be a whitespace-only string`);
   }
 }
 

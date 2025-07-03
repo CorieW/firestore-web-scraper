@@ -61,7 +61,7 @@ export class Queriable {
     // Retrieve the data using the specified target type
     let result: string[] = [];
     nodeArray.forEach((node) => {
-      if (node === undefined) return; // Skip undefined nodes
+      if (node == undefined) return; // Skip undefined nodes
 
       switch (query.target) {
         case TargetType.HTML:
@@ -86,8 +86,7 @@ export class Queriable {
       }
     });
 
-    // Return the result as a single value (if possible) or an array
-    return result.length === 1 ? result[0] : result;
+    return result;
   }
 
   multiQuery(queries: Query[]): { [key: string]: string[] | string } {
