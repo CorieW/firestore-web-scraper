@@ -10,7 +10,10 @@
     "compile": "tsc",
     "start:emulator": "cd ../_emulator && firebase emulators:start -P demo-test",
     "local:emulator": "concurrently --kill-others -c \"blue,red\" \"npm run start:emulator\" \"wait-on tcp:9099\"",
-    "test": "concurrently --kill-others -c \"blue,red\" \"npm run start:emulator\" \"wait-on tcp:9099 && cd ../_emulator && firebase emulators:exec --only extensions jest -P demo-test\""
+    "test": "concurrently --kill-others -c \"blue,red\" \"npm run start:emulator\" \"wait-on tcp:9099 && cd ../_emulator && firebase emulators:exec --only extensions jest -P demo-test\"",
+    "test:vitest": "vitest",
+    "test:vitest:run": "vitest run",
+    "test:vitest:watch": "vitest --watch"
   },
   "keywords": [],
   "author": "Corie Watson",
@@ -27,6 +30,7 @@
     "concurrently": "^9.1.2",
     "rimraf": "^2.6.3",
     "typescript": "^5.7.3",
+    "vitest": "^3.2.4",
     "wait-on": "^7.2.0"
   },
   "private": true
