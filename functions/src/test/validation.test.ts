@@ -5,9 +5,8 @@ import { Task } from '../types/Task'
 import { Query, QueryType, TargetType } from '../types/Query'
 
 describe('Validation Tests - Complete Coverage', () => {
-  
   describe('Task Validation - From Empty to Valid', () => {
-    
+
     describe('Null/Undefined/Empty Tasks', () => {
       it('should reject null task', () => {
         const result = validateTask(null as any)

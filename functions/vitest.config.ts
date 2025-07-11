@@ -6,10 +6,11 @@ export default defineConfig({
     testTimeout: 10000,
     include: ['**/*.test.ts'],
     exclude: ['node_modules/**', 'lib/**'],
+    setupFiles: ['./src/test/setup.ts'],
   },
   resolve: {
     alias: {
       '@': '/src',
     },
   },
-}) 
+})
