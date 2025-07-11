@@ -1,3 +1,4 @@
+import { logger } from "./logger";
 import { Queriable } from "./types/Queriable";
 
 async function fetchHtml(url: string): Promise<string> {
@@ -9,7 +10,7 @@ async function fetchHtml(url: string): Promise<string> {
     const html = await response.text();
     return html;
   } catch (error) {
-    console.error("Error fetching HTML:", error);
+    logger.error("Error fetching HTML:", error);
     throw error;
   }
 }
