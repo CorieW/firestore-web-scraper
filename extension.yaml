@@ -164,6 +164,24 @@ params:
     validationErrorMessage: Must be a valid Cloud Firestore collection
     required: true
 
+  - param: LOG_LEVEL
+    label: Log level
+    description: The log level to use.
+    type: select
+    options:
+      - label: Debug
+        value: debug
+      - label: Info
+        value: info
+      - label: Warn
+        value: warn
+      - label: Error
+        value: error
+      - label: Silent
+        value: silent
+    default: info
+    required: true
+
 events:
   - type: firebase.extensions.firestore-web-scraper.v1.onStart
     description: Occurs when the extension starts execution.

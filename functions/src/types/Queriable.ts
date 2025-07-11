@@ -2,7 +2,7 @@ import { JSDOM, DOMWindow } from 'jsdom';
 // import * as xpath from 'xpath';
 
 import { Query, QueryType, TargetType } from "./Query";
-import * as logs from '../logs';
+import { logger } from '../logger';
 import { validateQuery } from '../validation/query-validation';
 
 export class Queriable {
@@ -55,9 +55,6 @@ export class Queriable {
 
     // Handle non-array results (convert to array for consistency)
     const nodeArray = Array.isArray(nodes) ? nodes as Node[] : [nodes as Node];
-
-    logs.debug(`Query: ${query.id} - ${nodeArray.length} nodes found.`);
-    logs.debug(`Nodes: ${JSON.stringify(nodes)}`);
 
     // Serialize the nodes to strings
     const serializer = new this._window.XMLSerializer();
