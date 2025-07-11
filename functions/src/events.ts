@@ -70,13 +70,3 @@ export const recordPendingEvent = async (change, doc) => {
     data: { doc },
   });
 };
-
-export const recordRetryEvent = async (change, doc) => {
-  if (!eventChannel) return;
-
-  return eventChannel.publish({
-    type: "firebase.extensions.firestore-web-scraper.v1.onRetry",
-    subject: change.after.id,
-    data: { doc },
-  });
-};
