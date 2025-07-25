@@ -1,4 +1,13 @@
-import { ATTRIBUTE_KEY, ID_KEY, Query, QueryType, TARGET_KEY, TargetType, TYPE_KEY, VALUE_KEY } from "../types/Query";
+import {
+  ATTRIBUTE_KEY,
+  ID_KEY,
+  Query,
+  QueryType,
+  TARGET_KEY,
+  TargetType,
+  TYPE_KEY,
+  VALUE_KEY,
+} from '../types/Query';
 import { warn } from 'firebase-functions/logger';
 
 export function validateQuery(query: Query): void {
@@ -37,12 +46,16 @@ function validateQueryType(query: Query): void {
   }
 
   if (!Object.values(QueryType).includes(query[TYPE_KEY])) {
-    throw new Error(`Invalid query type ('${TYPE_KEY}'): '${query[TYPE_KEY]}'. Valid types are: ${Object.values(QueryType).join(', ')}`);
+    throw new Error(
+      `Invalid query type ('${TYPE_KEY}'): '${query[TYPE_KEY]}'. Valid types are: ${Object.values(QueryType).join(', ')}`
+    );
   }
 
   // TODO: Remove when supported
   if (query[TYPE_KEY] === QueryType.XPATH) {
-    throw new Error(`Query type ('${TYPE_KEY}') cannot be 'xpath'. This is not supported currently.`);
+    throw new Error(
+      `Query type ('${TYPE_KEY}') cannot be 'xpath'. This is not supported currently.`
+    );
   }
 }
 
@@ -66,7 +79,9 @@ function validateTargetType(query: Query): void {
   }
 
   if (!Object.values(TargetType).includes(query[TARGET_KEY])) {
-    throw new Error(`Invalid target type ('${TARGET_KEY}'): '${query[TARGET_KEY]}'. Valid types are: ${Object.values(TargetType).join(', ')}`);
+    throw new Error(
+      `Invalid target type ('${TARGET_KEY}'): '${query[TARGET_KEY]}'. Valid types are: ${Object.values(TargetType).join(', ')}`
+    );
   }
 }
 
@@ -78,7 +93,9 @@ function validateAttributeExtraction(query: Query): void {
 
   // If the target is not attribute and an attr is defined, warn the user
   if (query[TARGET_KEY] !== TargetType.ATTRIBUTE) {
-    warn(`${query[ID_KEY]} defines a '${TARGET_KEY}' target, which does not support '${ATTRIBUTE_KEY}' extraction.`);
+    warn(
+      `${query[ID_KEY]} defines a '${TARGET_KEY}' target, which does not support '${ATTRIBUTE_KEY}' extraction.`
+    );
   }
 
   if (typeof query[ATTRIBUTE_KEY] !== 'string') {
@@ -87,6 +104,8 @@ function validateAttributeExtraction(query: Query): void {
 
   // If target is attribute but no attr is provided, throw an error
   if (query.target === TargetType.ATTRIBUTE && !query[ATTRIBUTE_KEY]) {
-    throw new Error(`Attribute name ('${ATTRIBUTE_KEY}') is required when target type is 'attribute'`);
+    throw new Error(
+      `Attribute name ('${ATTRIBUTE_KEY}') is required when target type is 'attribute'`
+    );
   }
 }

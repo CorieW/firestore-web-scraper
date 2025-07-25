@@ -1,4 +1,4 @@
-import { QUERIES_KEY, Task, URL_KEY } from "../types/Task";
+import { QUERIES_KEY, Task, URL_KEY } from '../types/Task';
 
 /**
  * Validates a task and returns an error message if the task is invalid.

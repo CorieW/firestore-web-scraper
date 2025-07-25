@@ -1,7 +1,7 @@
 import { JSDOM, DOMWindow } from 'jsdom';
 // import * as xpath from 'xpath';
 
-import { Query, QueryType, TargetType } from "./Query";
+import { Query, QueryType, TargetType } from './Query';
 import { logger } from '../logger';
 import { validateQuery } from '../validation/query-validation';
 
@@ -54,7 +54,7 @@ export class Queriable {
     }
 
     // Handle non-array results (convert to array for consistency)
-    const nodeArray = Array.isArray(nodes) ? nodes as Node[] : [nodes as Node];
+    const nodeArray = Array.isArray(nodes) ? (nodes as Node[]) : [nodes as Node];
 
     // Serialize the nodes to strings
     const serializer = new this._window.XMLSerializer();
