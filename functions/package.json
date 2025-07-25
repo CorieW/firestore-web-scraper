@@ -10,10 +10,13 @@
     "clean": "rimraf lib",
     "compile": "tsc",
     "start:emulator": "cd ../_emulator && npx firebase emulators:start -P demo-test",
+    "local:emulator": "concurrently --kill-others -c \"blue,red\" \"npm run start:emulator\" \"wait-on tcp:9099\"",
     "test": "npx firebase emulators:exec --only extensions \"npm run test:vitest:run\" -P demo-test",
     "test:vitest": "vitest",
     "test:vitest:run": "vitest run",
-    "test:vitest:watch": "vitest --watch"
+    "test:vitest:watch": "vitest --watch",
+    "format": "prettier --write \"src/**/*.{ts,js,json}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,js,json}\""
   },
   "keywords": [],
   "author": "Corie Watson",
@@ -30,6 +33,7 @@
     "@vitest/coverage-v8": "^3.2.4",
     "concurrently": "^9.1.2",
     "firebase-tools": "^14.10.1",
+    "prettier": "^3.2.5",
     "rimraf": "^2.6.3",
     "typescript": "^5.7.3",
     "vitest": "^3.2.4",
