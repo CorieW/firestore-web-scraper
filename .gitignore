@@ -15,3 +15,6 @@ project.private/
 
 # Required for emulator
 _emulator/extensions/firestore-web-scraper.env.local
+
+# JUnit test results
+functions/test-report.junit.xml
