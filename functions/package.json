@@ -2,17 +2,21 @@
   "name": "firestore-web-scraper-functions",
   "description": "",
   "main": "lib/index.js",
+  "type": "module",
   "scripts": {
     "prepare": "npm run build",
     "build": "npm run clean && npm run compile",
     "build:watch": "npm run clean && tsc --watch",
     "clean": "rimraf lib",
     "compile": "tsc",
-    "start:emulator": "cd ../_emulator && firebase emulators:start -P demo-test",
+    "start:emulator": "cd ../_emulator && npx firebase emulators:start -P demo-test",
     "local:emulator": "concurrently --kill-others -c \"blue,red\" \"npm run start:emulator\" \"wait-on tcp:9099\"",
-    "test": "concurrently --kill-others -c \"blue,red\" \"npm run start:emulator\" \"wait-on tcp:9099 && cd ../_emulator && firebase emulators:exec --only extensions jest -P demo-test\"",
-    "format": "prettier --write \"src/**/*.{ts,js,json}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,js,json}\""
+    "test": "npx firebase emulators:exec --only extensions \"npm run test:vitest:run\" -P demo-test",
+    "test:vitest": "vitest",
+    "test:vitest:run": "vitest run",
+    "test:vitest:watch": "vitest --watch",
+    "format": "prettier --write \"src/**/*.{ts,js,json}\" --ignore-path .prettierignore",
+    "format:check": "prettier --check \"src/**/*.{ts,js,json}\" --ignore-path .prettierignore"
   },
   "keywords": [],
   "author": "Corie Watson",
@@ -26,10 +30,13 @@
   },
   "devDependencies": {
     "@types/jsdom": "^21.1.7",
+    "@vitest/coverage-v8": "^3.2.4",
     "concurrently": "^9.1.2",
+    "firebase-tools": "^14.10.1",
     "prettier": "^3.2.5",
     "rimraf": "^2.6.3",
     "typescript": "^5.7.3",
+    "vitest": "^3.2.4",
     "wait-on": "^7.2.0"
   },
   "private": true

@@ -1,8 +1,8 @@
-import { LogLevel } from '../logger';
+import { LogLevel } from '../logger'
 
 export interface Config {
-  location: string;
-  database: string;
-  scrapeCollection: string;
-  logLevel: LogLevel;
+  location: string
+  database: string
+  scrapeCollection: string
+  logLevel: LogLevel
 }

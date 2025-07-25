@@ -4,6 +4,8 @@
 
 <hr/>
 
+[![codecov](https://codecov.io/gh/CorieW/firestore-web-scraper/graph/badge.svg?token=6UIM5NKLR0)](https://codecov.io/gh/CorieW/firestore-web-scraper)
+
 ## 📝 About
 
 This extension allows you to automate web scraping tasks using Firestore. Simply add a document to a designated Firestore collection describing the website to scrape and the data to extract. The extension will process the task, perform the scraping, and update the document with the results, all managed directly from Firestore.

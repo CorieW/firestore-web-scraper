@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="128" failures="0" errors="0" time="0.7116840001">
+    <testsuite name="src/test/integration.test.ts" timestamp="2025-07-25T23:04:10.861Z" hostname="DESKTOP-AACMAQ0" tests="15" failures="0" errors="0" skipped="0" time="0.2941215">
+        <testcase classname="src/test/integration.test.ts" name="Integration Tests - Complete Workflow with Test HTML Page &gt; Task Validation &gt; should validate a valid task" time="0.0013817">
+        </testcase>
+        <testcase classname="src/test/integration.test.ts" name="Integration Tests - Complete Workflow with Test HTML Page &gt; Task Validation &gt; should reject task with invalid URL" time="0.0003480999">
+        </testcase>
+        <testcase classname="src/test/integration.test.ts" name="Integration Tests - Complete Workflow with Test HTML Page &gt; Task Validation &gt; should reject task with missing URL" time="0.0003355">
+        </testcase>
+        <testcase classname="src/test/integration.test.ts" name="Integration Tests - Complete Workflow with Test HTML Page &gt; Task Validation &gt; should reject task with no queries" time="0.0002358999">
+        </testcase>
+        <testcase classname="src/test/integration.test.ts" name="Integration Tests - Complete Workflow with Test HTML Page &gt; Task Validation &gt; should reject task with non-array queries" time="0.0002265999">
+        </testcase>
+        <testcase classname="src/test/integration.test.ts" name="Integration Tests - Complete Workflow with Test HTML Page &gt; Task Validation &gt; should reject undefined task" time="0.0001429">
+        </testcase>
+        <testcase classname="src/test/integration.test.ts" name="Integration Tests - Complete Workflow with Test HTML Page &gt; Complete Workflow - Simple Scenarios &gt; should extract page title successfully" time="0.1344725">
+        </testcase>
+        <testcase classname="src/test/integration.test.ts" name="Integration Tests - Complete Workflow with Test HTML Page &gt; Complete Workflow - Simple Scenarios &gt; should extract listings successfully" time="0.0262625">
+        </testcase>
+        <testcase classname="src/test/integration.test.ts" name="Integration Tests - Complete Workflow with Test HTML Page &gt; Complete Workflow - Simple Scenarios &gt; should extract table data successfully" time="0.0169124999">
+        </testcase>
+        <testcase classname="src/test/integration.test.ts" name="Integration Tests - Complete Workflow with Test HTML Page &gt; Complete Workflow - Complex Scenarios &gt; should handle multiple queries in a single task" time="0.0214951">
+        </testcase>
+        <testcase classname="src/test/integration.test.ts" name="Integration Tests - Complete Workflow with Test HTML Page &gt; Complete Workflow - Complex Scenarios &gt; should handle different target types in a single task" time="0.0175439">
+        </testcase>
+        <testcase classname="src/test/integration.test.ts" name="Integration Tests - Complete Workflow with Test HTML Page &gt; Complete Workflow - Complex Scenarios &gt; should handle queries that return no results" time="0.0170466">
+        </testcase>
+        <testcase classname="src/test/integration.test.ts" name="Integration Tests - Complete Workflow with Test HTML Page &gt; Real-world Use Cases &gt; should simulate e-commerce product listing extraction" time="0.0146788">
+        </testcase>
+        <testcase classname="src/test/integration.test.ts" name="Integration Tests - Complete Workflow with Test HTML Page &gt; Real-world Use Cases &gt; should simulate data table extraction for analytics" time="0.0173382">
+        </testcase>
+        <testcase classname="src/test/integration.test.ts" name="Integration Tests - Complete Workflow with Test HTML Page &gt; Real-world Use Cases &gt; should simulate content aggregation for news/articles" time="0.0205208">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/test/logger.test.ts" timestamp="2025-07-25T23:04:10.873Z" hostname="DESKTOP-AACMAQ0" tests="8" failures="0" errors="0" skipped="0" time="0.0069407001">
+        <testcase classname="src/test/logger.test.ts" name="Logger &gt; log level methods &gt; debug should call funcsLogger.debug when level is DEBUG" time="0.002725">
+        </testcase>
+        <testcase classname="src/test/logger.test.ts" name="Logger &gt; log level methods &gt; debug should not call funcsLogger.debug when level is INFO" time="0.0004773999">
+        </testcase>
+        <testcase classname="src/test/logger.test.ts" name="Logger &gt; log level methods &gt; info should call funcsLogger.info when level is INFO or lower" time="0.0006055">
+        </testcase>
+        <testcase classname="src/test/logger.test.ts" name="Logger &gt; log level methods &gt; warn should call funcsLogger.warn when level is WARN or lower" time="0.0004563999">
+        </testcase>
+        <testcase classname="src/test/logger.test.ts" name="Logger &gt; log level methods &gt; error should call funcsLogger.error when level is ERROR or lower" time="0.0002695">
+        </testcase>
+        <testcase classname="src/test/logger.test.ts" name="Logger &gt; log level methods &gt; no logging should occur when log level is SILENT" time="0.0003194">
+        </testcase>
+        <testcase classname="src/test/logger.test.ts" name="Logger &gt; prefix &gt; should prefix logs with the provided prefix" time="0.0003838">
+        </testcase>
+        <testcase classname="src/test/logger.test.ts" name="Logger &gt; prefix &gt; should not add a prefix if none is provided" time="0.000226">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/test/queriable.test.ts" timestamp="2025-07-25T23:04:10.879Z" hostname="DESKTOP-AACMAQ0" tests="21" failures="0" errors="0" skipped="0" time="0.1137696">
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Query by ID &gt; should find elements by ID" time="0.0026289999">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Query by ID &gt; should find info section by ID" time="0.0004966999">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Query by ID &gt; should find data section by ID" time="0.0004950999">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Query by ID &gt; should find articles section by ID" time="0.0002804">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Query by Class &gt; should find elements by class name" time="0.0021082001">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Query by Tag &gt; should find all h2 elements" time="0.0014984">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Query by Tag &gt; should find all h3 elements (articles)" time="0.0007626001">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Query by Tag &gt; should find all list items" time="0.0005691">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Query by CSS Selector &gt; should find table data using CSS selector" time="0.0015835999">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Query by CSS Selector &gt; should find specific table cells" time="0.0021918">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Query by CSS Selector &gt; should find navigation links" time="0.0011349">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Query by Attribute &gt; should find elements with specific attributes" time="0.0014787999">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Query by Attribute &gt; should find links with href attribute" time="0.0009053999">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Query by Attribute &gt; should find images with src attribute" time="0.0008224">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Different Target Types &gt; should extract HTML content" time="0.0013762">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Different Target Types &gt; should extract inner HTML content" time="0.0007057999">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Different Target Types &gt; should extract text content" time="0.0002228">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Multi-Query Functionality &gt; should handle multiple queries at once" time="0.0010065999">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Edge Cases and Error Handling &gt; should handle queries for non-existent elements" time="0.0003085001">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Edge Cases and Error Handling &gt; should handle queries for non-existent classes" time="0.0003471999">
+        </testcase>
+        <testcase classname="src/test/queriable.test.ts" name="Queriable with Test HTML Page &gt; Edge Cases and Error Handling &gt; should handle complex CSS selectors" time="0.000919">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/test/http.test.ts" timestamp="2025-07-25T23:04:10.892Z" hostname="DESKTOP-AACMAQ0" tests="10" failures="0" errors="0" skipped="0" time="0.2760893">
+        <testcase classname="src/test/http.test.ts" name="HTTP Functionality with Test HTML Page &gt; sendHttpRequestTo Function &gt; should successfully fetch and parse HTML" time="0.1445891">
+        </testcase>
+        <testcase classname="src/test/http.test.ts" name="HTTP Functionality with Test HTML Page &gt; sendHttpRequestTo Function &gt; should return a Queriable object that can be queried" time="0.0225489">
+        </testcase>
+        <testcase classname="src/test/http.test.ts" name="HTTP Functionality with Test HTML Page &gt; sendHttpRequestTo Function &gt; should handle HTTP errors gracefully" time="0.0034068999">
+        </testcase>
+        <testcase classname="src/test/http.test.ts" name="HTTP Functionality with Test HTML Page &gt; sendHttpRequestTo Function &gt; should handle invalid URLs" time="0.0003861001">
+        </testcase>
+        <testcase classname="src/test/http.test.ts" name="HTTP Functionality with Test HTML Page &gt; sendHttpRequestTo Function &gt; should handle non-existent domains" time="0.0165763">
+        </testcase>
+        <testcase classname="src/test/http.test.ts" name="HTTP Functionality with Test HTML Page &gt; Integration with Queriable &gt; should extract listings from fetched HTML" time="0.0175442001">
+        </testcase>
+        <testcase classname="src/test/http.test.ts" name="HTTP Functionality with Test HTML Page &gt; Integration with Queriable &gt; should extract table data from fetched HTML" time="0.0192207">
+        </testcase>
+        <testcase classname="src/test/http.test.ts" name="HTTP Functionality with Test HTML Page &gt; Integration with Queriable &gt; should extract article information from fetched HTML" time="0.0165462">
+        </testcase>
+        <testcase classname="src/test/http.test.ts" name="HTTP Functionality with Test HTML Page &gt; Integration with Queriable &gt; should extract navigation links from fetched HTML" time="0.0140789">
+        </testcase>
+        <testcase classname="src/test/http.test.ts" name="HTTP Functionality with Test HTML Page &gt; Real-world Scenarios &gt; should handle comprehensive data extraction scenario" time="0.0160224">
+        </testcase>
+    </testsuite>
+    <testsuite name="src/test/validation.test.ts" timestamp="2025-07-25T23:04:10.899Z" hostname="DESKTOP-AACMAQ0" tests="74" failures="0" errors="0" skipped="0" time="0.0207629">
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Null/Undefined/Empty Tasks &gt; should reject null task" time="0.0018631001">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Null/Undefined/Empty Tasks &gt; should reject undefined task" time="0.0004386001">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Null/Undefined/Empty Tasks &gt; should reject empty object task" time="0.0002656001">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Missing Required Fields &gt; should reject task missing URL field" time="0.0003091999">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Missing Required Fields &gt; should reject task missing queries field" time="0.000204">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Missing Required Fields &gt; should reject task missing both URL and queries" time="0.0001540999">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Invalid Field Types &gt; should reject task with non-string URL" time="0.0001516">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Invalid Field Types &gt; should reject task with boolean URL" time="0.0001221">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Invalid Field Types &gt; should reject task with object URL" time="0.0002260001">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Invalid Field Types &gt; should reject task with non-array queries" time="0.0001745001">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Invalid Field Types &gt; should reject task with object queries" time="0.0001505001">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Invalid Field Types &gt; should reject task with null queries" time="0.0001209">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Invalid URLs &gt; should reject task with empty string URL" time="0.0002458999">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Invalid URLs &gt; should reject task with whitespace-only URL" time="0.0003852">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Invalid URLs &gt; should reject task with invalid URL format" time="0.0002175">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Invalid URLs &gt; should reject task with malformed URL" time="0.0001578">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Invalid URLs &gt; should reject task with URL containing only protocol" time="0.0001571001">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Empty Queries Array &gt; should reject task with empty queries array" time="0.0001151999">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Valid URLs but Edge Cases &gt; should accept task with HTTP URL" time="0.0002004">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Valid URLs but Edge Cases &gt; should accept task with HTTPS URL" time="0.0001287">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Valid URLs but Edge Cases &gt; should accept task with URL containing port" time="0.0001118">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Valid URLs but Edge Cases &gt; should accept task with URL containing path" time="0.0001164">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Valid URLs but Edge Cases &gt; should accept task with URL containing query parameters" time="0.0001194">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Valid URLs but Edge Cases &gt; should accept task with URL containing fragment" time="0.0001294999">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Tasks with Valid URLs but Edge Cases &gt; should accept task with localhost URL" time="0.0001121">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Fully Valid Tasks &gt; should accept minimal valid task" time="0.0001202999">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Fully Valid Tasks &gt; should accept task with multiple queries" time="0.000131">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Task Validation - From Empty to Valid &gt; Fully Valid Tasks &gt; should accept task with complex queries" time="0.0001466">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Null/Undefined/Empty Queries &gt; should reject null query" time="0.0008001">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Null/Undefined/Empty Queries &gt; should reject undefined query" time="0.0002736">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Null/Undefined/Empty Queries &gt; should reject empty object query" time="0.0001829">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Null/Undefined/Empty Queries &gt; should reject non-object query" time="0.0001851">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Null/Undefined/Empty Queries &gt; should reject number query" time="0.0003359001">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Null/Undefined/Empty Queries &gt; should reject boolean query" time="0.0002230999">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Queries with Missing Required Fields &gt; should reject query missing id" time="0.0002809999">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Queries with Missing Required Fields &gt; should reject query missing type" time="0.0002552">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Queries with Missing Required Fields &gt; should reject query missing value" time="0.0003314">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Queries with Missing Required Fields &gt; should reject query missing target" time="0.0002752">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Queries with Invalid Field Types &gt; should reject query with non-string id" time="0.0002428">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Queries with Invalid Field Types &gt; should reject query with null id" time="0.0002871">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Queries with Invalid Field Types &gt; should reject query with empty string id" time="0.0002264">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Queries with Invalid Field Types &gt; should reject query with whitespace-only id" time="0.0002086999">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Queries with Invalid Field Types &gt; should reject query with invalid type" time="0.0002208">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Queries with Invalid Field Types &gt; should reject query with non-string type" time="0.0002122999">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Queries with Invalid Field Types &gt; should reject query with non-string value" time="0.0002061">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Queries with Invalid Field Types &gt; should reject query with null value" time="0.0001961">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Queries with Invalid Field Types &gt; should reject query with empty string value" time="0.0002017">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Queries with Invalid Field Types &gt; should reject query with invalid target" time="0.0001999">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Queries with Invalid Field Types &gt; should reject query with non-string target" time="0.0001991">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Queries with Missing Required Attribute Field &gt; should reject ATTRIBUTE target query without attr field" time="0.0002598001">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Queries with Missing Required Attribute Field &gt; should reject ATTRIBUTE target query with empty attr field" time="0.0002016">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Queries with Missing Required Attribute Field &gt; should reject ATTRIBUTE target query with null attr field" time="0.0002049">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Queries with Missing Required Attribute Field &gt; should reject ATTRIBUTE target query with non-string attr field" time="0.0002286999">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Special Query Type Validation &gt; should reject XPATH query type (not supported)" time="0.0002644">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Edge Cases for Each Query Type &gt; should accept ID query with valid data" time="0.0002386999">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Edge Cases for Each Query Type &gt; should accept CLASS query with valid data" time="0.0001842">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Edge Cases for Each Query Type &gt; should accept TAG query with valid data" time="0.0001734">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Edge Cases for Each Query Type &gt; should accept ATTRIBUTE query with valid data" time="0.0001848">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Edge Cases for Each Query Type &gt; should accept SELECTOR query with valid data" time="0.0001798">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Edge Cases for Each Target Type &gt; should accept TEXT target" time="0.0001954">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Edge Cases for Each Target Type &gt; should accept HTML target" time="0.000235">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Edge Cases for Each Target Type &gt; should accept INNER_HTML target" time="0.0001875">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Edge Cases for Each Target Type &gt; should accept ATTRIBUTE target with attr field" time="0.000212">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Complex Valid Queries &gt; should accept query with complex CSS selector" time="0.0001715">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Complex Valid Queries &gt; should accept query with attribute extraction" time="0.0001833">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Complex Valid Queries &gt; should accept query with pseudo-selectors" time="0.0001823">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Complex Valid Queries &gt; should accept query with attribute selectors" time="0.0001785001">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Complex Valid Queries &gt; should accept query with special characters in CSS selector" time="0.0002609">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Query Validation - From Invalid to Valid &gt; Warnings for Non-Attribute Targets with Attr Field &gt; should accept but warn when non-ATTRIBUTE target has attr field" time="0.0005353">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Integration - Task with Invalid Queries &gt; should accept task with valid queries array" time="0.0001963">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Integration - Task with Invalid Queries &gt; should accept task with single query" time="0.0001353">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Integration - Task with Invalid Queries &gt; should accept task with attribute extraction query" time="0.0001242001">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Integration - Task with Invalid Queries &gt; should accept task with mixed query types" time="0.0003652">
+        </testcase>
+        <testcase classname="src/test/validation.test.ts" name="Validation Tests - Complete Coverage &gt; Integration - Task with Invalid Queries &gt; should accept task with all supported target types" time="0.0001619">
+        </testcase>
+    </testsuite>
+</testsuites>
