@@ -55,9 +55,9 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
             id: 'title',
             type: QueryType.TAG,
             value: 'h1',
-            target: TargetType.TEXT
-          }
-        ]
+            target: TargetType.TEXT,
+          },
+        ],
       }
 
       const validationResult = validateTask(task)
@@ -72,9 +72,9 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
             id: 'title',
             type: QueryType.TAG,
             value: 'h1',
-            target: TargetType.TEXT
-          }
-        ]
+            target: TargetType.TEXT,
+          },
+        ],
       }
 
       const validationResult = validateTask(task)
@@ -89,9 +89,9 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
             id: 'title',
             type: QueryType.TAG,
             value: 'h1',
-            target: TargetType.TEXT
-          }
-        ]
+            target: TargetType.TEXT,
+          },
+        ],
       }
 
       const validationResult = validateTask(task)
@@ -101,7 +101,7 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
     it('should reject task with no queries', () => {
       const task: Task = {
         url: baseUrl,
-        queries: []
+        queries: [],
       }
 
       const validationResult = validateTask(task)
@@ -111,7 +111,7 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
     it('should reject task with non-array queries', () => {
       const task: any = {
         url: baseUrl,
-        queries: 'not-an-array'
+        queries: 'not-an-array',
       }
 
       const validationResult = validateTask(task)
@@ -120,7 +120,7 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
 
     it('should reject undefined task', () => {
       const validationResult = validateTask(undefined)
-      expect(validationResult).toBe("Task is missing")
+      expect(validationResult).toBe('Task is missing')
     })
   })
 
@@ -133,9 +133,9 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
             id: 'page-title',
             type: QueryType.TAG,
             value: 'h1',
-            target: TargetType.TEXT
-          }
-        ]
+            target: TargetType.TEXT,
+          },
+        ],
       }
 
       // Validate the task
@@ -147,7 +147,9 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
       const results = queriable.multiQuery(task.queries)
 
       expect(results['page-title']).toBeDefined()
-      expect(Array.isArray(results['page-title']) ? results['page-title'][0] : results['page-title']).toBe('Test Page for Web Scraper')
+      expect(
+        Array.isArray(results['page-title']) ? results['page-title'][0] : results['page-title']
+      ).toBe('Test Page for Web Scraper')
     })
 
     it('should extract listings successfully', async () => {
@@ -158,9 +160,9 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
             id: 'listings',
             type: QueryType.SELECTOR,
             value: '#listings ul li',
-            target: TargetType.TEXT
-          }
-        ]
+            target: TargetType.TEXT,
+          },
+        ],
       }
 
       // Validate the task
@@ -186,9 +188,9 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
             id: 'table-names',
             type: QueryType.SELECTOR,
             value: 'table tbody tr td:nth-child(2)',
-            target: TargetType.TEXT
-          }
-        ]
+            target: TargetType.TEXT,
+          },
+        ],
       }
 
       // Validate the task
@@ -218,46 +220,46 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
             id: 'page-title',
             type: QueryType.TAG,
             value: 'title',
-            target: TargetType.TEXT
+            target: TargetType.TEXT,
           },
           {
             id: 'main-heading',
             type: QueryType.TAG,
             value: 'h1',
-            target: TargetType.TEXT
+            target: TargetType.TEXT,
           },
           {
             id: 'section-headings',
             type: QueryType.TAG,
             value: 'h2',
-            target: TargetType.TEXT
+            target: TargetType.TEXT,
           },
           {
             id: 'listings',
             type: QueryType.SELECTOR,
             value: '#listings ul li',
-            target: TargetType.TEXT
+            target: TargetType.TEXT,
           },
           {
             id: 'table-data',
             type: QueryType.SELECTOR,
             value: 'table tbody tr td:nth-child(2)',
-            target: TargetType.TEXT
+            target: TargetType.TEXT,
           },
           {
             id: 'article-titles',
             type: QueryType.SELECTOR,
             value: 'article h3',
-            target: TargetType.TEXT
+            target: TargetType.TEXT,
           },
           {
             id: 'nav-links',
             type: QueryType.SELECTOR,
             value: 'nav ul li a',
             target: TargetType.ATTRIBUTE,
-            attr: 'href'
-          }
-        ]
+            attr: 'href',
+          },
+        ],
       }
 
       // Validate the task
@@ -270,10 +272,16 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
 
       // Verify all results
       expect(results['page-title']).toBeDefined()
-      expect(Array.isArray(results['page-title']) ? results['page-title'][0] : results['page-title']).toBe('Test Page for Web Scraper')
+      expect(
+        Array.isArray(results['page-title']) ? results['page-title'][0] : results['page-title']
+      ).toBe('Test Page for Web Scraper')
 
       expect(results['main-heading']).toBeDefined()
-      expect(Array.isArray(results['main-heading']) ? results['main-heading'][0] : results['main-heading']).toBe('Test Page for Web Scraper')
+      expect(
+        Array.isArray(results['main-heading'])
+          ? results['main-heading'][0]
+          : results['main-heading']
+      ).toBe('Test Page for Web Scraper')
 
       expect(results['section-headings']).toBeDefined()
       expect(Array.isArray(results['section-headings'])).toBe(true)
@@ -319,28 +327,28 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
             id: 'title-text',
             type: QueryType.TAG,
             value: 'h1',
-            target: TargetType.TEXT
+            target: TargetType.TEXT,
           },
           {
             id: 'title-html',
             type: QueryType.TAG,
             value: 'h1',
-            target: TargetType.HTML
+            target: TargetType.HTML,
           },
           {
             id: 'title-inner-html',
             type: QueryType.TAG,
             value: 'h1',
-            target: TargetType.INNER_HTML
+            target: TargetType.INNER_HTML,
           },
           {
             id: 'link-href',
             type: QueryType.SELECTOR,
             value: 'nav ul li a',
             target: TargetType.ATTRIBUTE,
-            attr: 'href'
-          }
-        ]
+            attr: 'href',
+          },
+        ],
       }
 
       // Validate the task
@@ -352,14 +360,24 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
       const results = queriable.multiQuery(task.queries)
 
       expect(results['title-text']).toBeDefined()
-      expect(Array.isArray(results['title-text']) ? results['title-text'][0] : results['title-text']).toBe('Test Page for Web Scraper')
+      expect(
+        Array.isArray(results['title-text']) ? results['title-text'][0] : results['title-text']
+      ).toBe('Test Page for Web Scraper')
 
       expect(results['title-html']).toBeDefined()
-      expect(Array.isArray(results['title-html']) ? results['title-html'][0] : results['title-html']).toContain('h1')
-      expect(Array.isArray(results['title-html']) ? results['title-html'][0] : results['title-html']).toContain('Test Page for Web Scraper')
+      expect(
+        Array.isArray(results['title-html']) ? results['title-html'][0] : results['title-html']
+      ).toContain('h1')
+      expect(
+        Array.isArray(results['title-html']) ? results['title-html'][0] : results['title-html']
+      ).toContain('Test Page for Web Scraper')
 
       expect(results['title-inner-html']).toBeDefined()
-      expect(Array.isArray(results['title-inner-html']) ? results['title-inner-html'][0] : results['title-inner-html']).toBe('Test Page for Web Scraper')
+      expect(
+        Array.isArray(results['title-inner-html'])
+          ? results['title-inner-html'][0]
+          : results['title-inner-html']
+      ).toBe('Test Page for Web Scraper')
 
       expect(results['link-href']).toBeDefined()
       expect(Array.isArray(results['link-href'])).toBe(true)
@@ -375,21 +393,21 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
             id: 'existing-element',
             type: QueryType.TAG,
             value: 'h1',
-            target: TargetType.TEXT
+            target: TargetType.TEXT,
           },
           {
             id: 'non-existent-element',
             type: QueryType.ID,
             value: 'non-existent-id',
-            target: TargetType.TEXT
+            target: TargetType.TEXT,
           },
           {
             id: 'non-existent-class',
             type: QueryType.CLASS,
             value: 'non-existent-class',
-            target: TargetType.TEXT
-          }
-        ]
+            target: TargetType.TEXT,
+          },
+        ],
       }
 
       // Validate the task
@@ -401,7 +419,11 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
       const results = queriable.multiQuery(task.queries)
 
       expect(results['existing-element']).toBeDefined()
-      expect(Array.isArray(results['existing-element']) ? results['existing-element'][0] : results['existing-element']).toBe('Test Page for Web Scraper')
+      expect(
+        Array.isArray(results['existing-element'])
+          ? results['existing-element'][0]
+          : results['existing-element']
+      ).toBe('Test Page for Web Scraper')
 
       expect(results['non-existent-element']).toBeDefined()
       expect(Array.isArray(results['non-existent-element'])).toBe(true)
@@ -422,21 +444,21 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
             id: 'product-names',
             type: QueryType.SELECTOR,
             value: '#listings ul li',
-            target: TargetType.TEXT
+            target: TargetType.TEXT,
           },
           {
             id: 'product-count',
             type: QueryType.SELECTOR,
             value: '#listings ul li',
-            target: TargetType.TEXT
+            target: TargetType.TEXT,
           },
           {
             id: 'page-title',
             type: QueryType.TAG,
             value: 'h1',
-            target: TargetType.TEXT
-          }
-        ]
+            target: TargetType.TEXT,
+          },
+        ],
       }
 
       const validationResult = validateTask(task)
@@ -448,13 +470,15 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
       expect(results['product-names']).toBeDefined()
       expect(Array.isArray(results['product-names'])).toBe(true)
       expect((results['product-names'] as string[]).length).toBe(5)
-      
+
       expect(results['product-count']).toBeDefined()
       expect(Array.isArray(results['product-count'])).toBe(true)
       expect((results['product-count'] as string[]).length).toBe(5)
-      
+
       expect(results['page-title']).toBeDefined()
-      expect(Array.isArray(results['page-title']) ? results['page-title'][0] : results['page-title']).toBe('Test Page for Web Scraper')
+      expect(
+        Array.isArray(results['page-title']) ? results['page-title'][0] : results['page-title']
+      ).toBe('Test Page for Web Scraper')
     })
 
     it('should simulate data table extraction for analytics', async () => {
@@ -465,27 +489,27 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
             id: 'data-ids',
             type: QueryType.SELECTOR,
             value: 'table tbody tr td:nth-child(1)',
-            target: TargetType.TEXT
+            target: TargetType.TEXT,
           },
           {
             id: 'data-names',
             type: QueryType.SELECTOR,
             value: 'table tbody tr td:nth-child(2)',
-            target: TargetType.TEXT
+            target: TargetType.TEXT,
           },
           {
             id: 'data-values',
             type: QueryType.SELECTOR,
             value: 'table tbody tr td:nth-child(3)',
-            target: TargetType.TEXT
+            target: TargetType.TEXT,
           },
           {
             id: 'table-headers',
             type: QueryType.SELECTOR,
             value: 'table thead tr th',
-            target: TargetType.TEXT
-          }
-        ]
+            target: TargetType.TEXT,
+          },
+        ],
       }
 
       const validationResult = validateTask(task)
@@ -534,21 +558,21 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
             id: 'article-titles',
             type: QueryType.SELECTOR,
             value: 'article h3',
-            target: TargetType.TEXT
+            target: TargetType.TEXT,
           },
           {
             id: 'article-content',
             type: QueryType.SELECTOR,
             value: 'article p',
-            target: TargetType.TEXT
+            target: TargetType.TEXT,
           },
           {
             id: 'article-count',
             type: QueryType.TAG,
             value: 'article',
-            target: TargetType.TEXT
-          }
-        ]
+            target: TargetType.TEXT,
+          },
+        ],
       }
 
       const validationResult = validateTask(task)

@@ -23,6 +23,10 @@ jobs:
         run: npm ci
         working-directory: functions
 
+      - name: Check formatting
+        run: npm run format:check
+        working-directory: functions
+
       - name: Build functions
         run: npm run build
         working-directory: functions

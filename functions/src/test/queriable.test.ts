@@ -21,7 +21,7 @@ describe('Queriable with Test HTML Page', () => {
         id: 'test-listings',
         type: QueryType.ID,
         value: 'listings',
-        target: TargetType.TEXT
+        target: TargetType.TEXT,
       }
 
       const result = queriable.query(query)
@@ -34,7 +34,7 @@ describe('Queriable with Test HTML Page', () => {
         id: 'test-info',
         type: QueryType.ID,
         value: 'info',
-        target: TargetType.TEXT
+        target: TargetType.TEXT,
       }
 
       const result = queriable.query(query)
@@ -47,7 +47,7 @@ describe('Queriable with Test HTML Page', () => {
         id: 'test-data',
         type: QueryType.ID,
         value: 'data',
-        target: TargetType.TEXT
+        target: TargetType.TEXT,
       }
 
       const result = queriable.query(query)
@@ -60,7 +60,7 @@ describe('Queriable with Test HTML Page', () => {
         id: 'test-articles',
         type: QueryType.ID,
         value: 'articles',
-        target: TargetType.TEXT
+        target: TargetType.TEXT,
       }
 
       const result = queriable.query(query)
@@ -75,7 +75,7 @@ describe('Queriable with Test HTML Page', () => {
         id: 'test-listing-class',
         type: QueryType.CLASS,
         value: 'listing',
-        target: TargetType.TEXT
+        target: TargetType.TEXT,
       }
 
       const result = queriable.query(query)
@@ -91,7 +91,7 @@ describe('Queriable with Test HTML Page', () => {
         id: 'test-h2-tags',
         type: QueryType.TAG,
         value: 'h2',
-        target: TargetType.TEXT
+        target: TargetType.TEXT,
       }
 
       const result = queriable.query(query)
@@ -108,7 +108,7 @@ describe('Queriable with Test HTML Page', () => {
         id: 'test-h3-tags',
         type: QueryType.TAG,
         value: 'h3',
-        target: TargetType.TEXT
+        target: TargetType.TEXT,
       }
 
       const result = queriable.query(query)
@@ -124,7 +124,7 @@ describe('Queriable with Test HTML Page', () => {
         id: 'test-li-tags',
         type: QueryType.TAG,
         value: 'li',
-        target: TargetType.TEXT
+        target: TargetType.TEXT,
       }
 
       const result = queriable.query(query)
@@ -139,7 +139,7 @@ describe('Queriable with Test HTML Page', () => {
         id: 'test-table-data',
         type: QueryType.SELECTOR,
         value: 'table tbody tr',
-        target: TargetType.TEXT
+        target: TargetType.TEXT,
       }
 
       const result = queriable.query(query)
@@ -156,7 +156,7 @@ describe('Queriable with Test HTML Page', () => {
         id: 'test-table-names',
         type: QueryType.SELECTOR,
         value: 'table tbody tr td:nth-child(2)',
-        target: TargetType.TEXT
+        target: TargetType.TEXT,
       }
 
       const result = queriable.query(query)
@@ -173,7 +173,7 @@ describe('Queriable with Test HTML Page', () => {
         id: 'test-nav-links',
         type: QueryType.SELECTOR,
         value: 'nav ul li a',
-        target: TargetType.TEXT
+        target: TargetType.TEXT,
       }
 
       const result = queriable.query(query)
@@ -192,7 +192,7 @@ describe('Queriable with Test HTML Page', () => {
         id: 'test-id-attribute',
         type: QueryType.ATTRIBUTE,
         value: 'id',
-        target: TargetType.TEXT
+        target: TargetType.TEXT,
       }
 
       const result = queriable.query(query)
@@ -206,7 +206,7 @@ describe('Queriable with Test HTML Page', () => {
         type: QueryType.ATTRIBUTE,
         value: 'href',
         target: TargetType.ATTRIBUTE,
-        attr: 'href'
+        attr: 'href',
       }
 
       const result = queriable.query(query)
@@ -224,7 +224,7 @@ describe('Queriable with Test HTML Page', () => {
         type: QueryType.SELECTOR,
         value: 'img',
         target: TargetType.ATTRIBUTE,
-        attr: 'src'
+        attr: 'src',
       }
 
       const result = queriable.query(query)
@@ -240,7 +240,7 @@ describe('Queriable with Test HTML Page', () => {
         id: 'test-html-target',
         type: QueryType.TAG,
         value: 'h1',
-        target: TargetType.HTML
+        target: TargetType.HTML,
       }
 
       const result = queriable.query(query)
@@ -254,7 +254,7 @@ describe('Queriable with Test HTML Page', () => {
         id: 'test-inner-html-target',
         type: QueryType.TAG,
         value: 'h1',
-        target: TargetType.INNER_HTML
+        target: TargetType.INNER_HTML,
       }
 
       const result = queriable.query(query)
@@ -267,7 +267,7 @@ describe('Queriable with Test HTML Page', () => {
         id: 'test-text-target',
         type: QueryType.TAG,
         value: 'h1',
-        target: TargetType.TEXT
+        target: TargetType.TEXT,
       }
 
       const result = queriable.query(query)
@@ -283,36 +283,38 @@ describe('Queriable with Test HTML Page', () => {
           id: 'page-title',
           type: QueryType.TAG,
           value: 'h1',
-          target: TargetType.TEXT
+          target: TargetType.TEXT,
         },
         {
           id: 'section-headings',
           type: QueryType.TAG,
           value: 'h2',
-          target: TargetType.TEXT
+          target: TargetType.TEXT,
         },
         {
           id: 'article-titles',
           type: QueryType.TAG,
           value: 'h3',
-          target: TargetType.TEXT
+          target: TargetType.TEXT,
         },
         {
           id: 'table-data',
           type: QueryType.SELECTOR,
           value: 'table tbody tr td:nth-child(2)',
-          target: TargetType.TEXT
-        }
+          target: TargetType.TEXT,
+        },
       ]
 
       const results = queriable.multiQuery(queries)
-      
+
       expect(results['page-title']).toBeDefined()
       expect(results['section-headings']).toBeDefined()
       expect(results['article-titles']).toBeDefined()
       expect(results['table-data']).toBeDefined()
-      
-      expect(Array.isArray(results['page-title']) ? results['page-title'][0] : results['page-title']).toBe('Test Page for Web Scraper')
+
+      expect(
+        Array.isArray(results['page-title']) ? results['page-title'][0] : results['page-title']
+      ).toBe('Test Page for Web Scraper')
       expect(Array.isArray(results['section-headings'])).toBe(true)
       expect((results['section-headings'] as string[]).length).toBe(4)
       expect(Array.isArray(results['article-titles'])).toBe(true)
@@ -328,7 +330,7 @@ describe('Queriable with Test HTML Page', () => {
         id: 'non-existent',
         type: QueryType.ID,
         value: 'non-existent-id',
-        target: TargetType.TEXT
+        target: TargetType.TEXT,
       }
 
       const result = queriable.query(query)
@@ -341,7 +343,7 @@ describe('Queriable with Test HTML Page', () => {
         id: 'non-existent-class',
         type: QueryType.CLASS,
         value: 'non-existent-class',
-        target: TargetType.TEXT
+        target: TargetType.TEXT,
       }
 
       const result = queriable.query(query)
@@ -354,7 +356,7 @@ describe('Queriable with Test HTML Page', () => {
         id: 'complex-selector',
         type: QueryType.SELECTOR,
         value: 'section#listings ul li',
-        target: TargetType.TEXT
+        target: TargetType.TEXT,
       }
 
       const result = queriable.query(query)
@@ -363,4 +365,4 @@ describe('Queriable with Test HTML Page', () => {
       expect(result[0]).toContain('Listing Item 1')
     })
   })
-}) 
+})
