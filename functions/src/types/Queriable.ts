@@ -1,8 +1,8 @@
 import { JSDOM, DOMWindow } from 'jsdom';
 // import * as xpath from 'xpath';
 
-import { Query, QueryType, TargetType } from './Query';
-import * as logs from '../logs';
+import { Query, QueryType, TargetType } from "./Query";
+import { logger } from '../logger';
 import { validateQuery } from '../validation/query-validation';
 
 export class Queriable {
@@ -54,17 +54,14 @@ export class Queriable {
     }
 
     // Handle non-array results (convert to array for consistency)
-    const nodeArray = Array.isArray(nodes) ? (nodes as Node[]) : [nodes as Node];
-
-    logs.debug(`Query: ${query.id} - ${nodeArray.length} nodes found.`);
-    logs.debug(`Nodes: ${JSON.stringify(nodes)}`);
+    const nodeArray = Array.isArray(nodes) ? nodes as Node[] : [nodes as Node];
 
     // Serialize the nodes to strings
     const serializer = new this._window.XMLSerializer();
     // Retrieve the data using the specified target type
     let result: string[] = [];
     nodeArray.forEach((node) => {
-      if (node === undefined) return; // Skip undefined nodes
+      if (node == undefined) return; // Skip undefined nodes
 
       switch (query.target) {
         case TargetType.HTML:
@@ -89,8 +86,7 @@ export class Queriable {
       }
     });
 
-    // Return the result as a single value (if possible) or an array
-    return result.length === 1 ? result[0] : result;
+    return result;
   }
 
   multiQuery(queries: Query[]): { [key: string]: string[] | string } {

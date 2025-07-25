@@ -43,7 +43,8 @@ Each query in the `queries` array narrows down specific elements from the HTML. 
 {
   "id": "header",
   "type": "id",
-  "value": "header"
+  "value": "header",
+  "target": "html"
 }
 ```
 Selects element with ID `#header`
@@ -53,7 +54,8 @@ Selects element with ID `#header`
 {
   "id": "menu",
   "type": "class",
-  "value": "menu-item"
+  "value": "menu-item",
+  "target": "html"
 }
 ```
 Selects elements with class `.menu-item`
@@ -63,7 +65,8 @@ Selects elements with class `.menu-item`
 {
   "id": "links",
   "type": "tag",
-  "value": "a"
+  "value": "a",
+  "target": "html"
 }
 ```
 Selects all `<a>` tags
@@ -85,7 +88,8 @@ Selects elements with matching attribute
 {
   "id": "content",
   "type": "selector",
-  "value": "div.content"
+  "value": "div.content",
+  "target": "html"
 }
 ```
 Selects elements using CSS selector
@@ -140,12 +144,14 @@ Extracts the value of specified attribute from selected elements
     {
       "id": "title",
       "type": "tag",
-      "value": "h1"
+      "value": "h1",
+      "target": "text"
     },
     {
       "id": "description",
       "type": "class",
-      "value": "description"
+      "value": "description",
+      "target": "html"
     },
     {
       "id": "links",
@@ -168,12 +174,14 @@ Extracts the text content of the `<h1>` tag, the text content of the element wit
     {
       "id": "title",
       "type": "tag",
-      "value": "h1"
+      "value": "h1",
+      "target": "text"
     },
     {
       "id": "description",
       "type": "class",
-      "value": "description"
+      "value": "description",
+      "target": "html"
     },
     {
       "id": "links",
@@ -184,10 +192,12 @@ Extracts the text content of the `<h1>` tag, the text content of the element wit
     }
   ],
   "data": {
-    "title": "Example Domain",
-    "description": "<p>This domain is for use in illustrative examples...</p>",
+    "title": ["Example Domain"],
+    "description": ["<p>This domain is for use in illustrative examples...</p>"],
     "links": ["https://www.iana.org/domains/example", "https://www.iana.org/domains/reserved"]
   },
-  "timestamp": "2023-01-01T00:00:00Z"
+  "startedAt": "2023-01-01T00:00:00Z",
+  "concludedAt": "2023-01-01T00:00:00Z",
+  "stage": "Success"
 }
 ```
