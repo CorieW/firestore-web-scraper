@@ -1,4 +1,4 @@
-import { LogLevel } from "./logger";
+import { LogLevel } from './logger';
 import { Config } from './types/Config';
 
 const config: Config = {

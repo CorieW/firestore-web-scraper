@@ -1,11 +1,11 @@
-import { logger as funcsLogger } from "firebase-functions/v1";
+import { logger as funcsLogger } from 'firebase-functions/v1';
 
 export enum LogLevel {
-  DEBUG = "debug", // Will log everything
-  INFO = "info", // Will log info, warnings, and errors
-  WARN = "warn", // Will log warnings and errors
-  ERROR = "error", // Will log errors only
-  SILENT = "silent", // Won't log anything
+  DEBUG = 'debug', // Will log everything
+  INFO = 'info', // Will log info, warnings, and errors
+  WARN = 'warn', // Will log warnings and errors
+  ERROR = 'error', // Will log errors only
+  SILENT = 'silent', // Won't log anything
 }
 
 const levels = {
@@ -18,7 +18,7 @@ const levels = {
 
 export class Logger {
   private logLevel: number;
-  private prefix: string = "";
+  private prefix: string = '';
 
   /**
    * @param logLevel LogLevel to set the logger to. Default is LogLevel.INFO.
@@ -26,11 +26,11 @@ export class Logger {
    */
   constructor(logLevel: LogLevel | string = LogLevel.INFO, prefix?: string) {
     this.setLogLevel(logLevel);
-    this.prefix = prefix ? `[${prefix}]:` : "";
+    this.prefix = prefix ? `[${prefix}]:` : '';
   }
 
   setLogLevel(logLevel: LogLevel | string): void {
-    if (typeof logLevel === "string") {
+    if (typeof logLevel === 'string') {
       this.logLevel = levels[logLevel as keyof typeof levels] ?? levels.info;
     } else {
       this.logLevel = levels[logLevel];

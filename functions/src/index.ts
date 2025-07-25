@@ -1,14 +1,18 @@
-import * as admin from "firebase-admin";
-import { Timestamp } from "firebase-admin/firestore";
-import { FirestoreEvent, onDocumentCreated, QueryDocumentSnapshot } from "firebase-functions/v2/firestore";
+import * as admin from 'firebase-admin';
+import { Timestamp } from 'firebase-admin/firestore';
+import {
+  FirestoreEvent,
+  onDocumentCreated,
+  QueryDocumentSnapshot,
+} from 'firebase-functions/v2/firestore';
 
-import { logger } from "./logger";
-import config from "./config";
-import * as events from "./events";
-import { Task } from "./types/Task";
-import { validateTask } from "./validation/task-validation";
-import { sendHttpRequestTo } from "./http";
-import { TaskStage } from "./types/TaskStage";
+import { logger } from './logger';
+import config from './config';
+import * as events from './events';
+import { Task } from './types/Task';
+import { validateTask } from './validation/task-validation';
+import { sendHttpRequestTo } from './http';
+import { TaskStage } from './types/TaskStage';
 
 let db: admin.firestore.Firestore;
 let initialized = false;
@@ -26,36 +30,33 @@ async function initialize() {
   events.setupEventChannel();
 }
 
-export const processQueue = onDocumentCreated(config.scrapeCollection,
-    async (
-      snapshot: FirestoreEvent<QueryDocumentSnapshot>,
-    ) => {
-      await initialize();
-      logger.debug("Processing queue");
+export const processQueue = onDocumentCreated(
+  config.scrapeCollection,
+  async (snapshot: FirestoreEvent<QueryDocumentSnapshot>) => {
+    await initialize();
+    logger.debug('Processing queue');
 
-      try {
-        await processWrite(snapshot.data);
-      } catch (err) {
-        await events.recordErrorEvent(
-          snapshot.data.data(),
-          `Unhandled error occurred during processing: ${err.message}"`
-        );
-        logger.error(err);
-        return null;
-      }
-
-      /** record complete event */
-      await events.recordCompleteEvent(snapshot);
-
-      logger.debug("Queue processed");
+    try {
+      await processWrite(snapshot.data);
+    } catch (err) {
+      await events.recordErrorEvent(
+        snapshot.data.data(),
+        `Unhandled error occurred during processing: ${err.message}"`
+      );
+      logger.error(err);
+      return null;
     }
-  );
 
-async function processWrite(
-  snapshot: QueryDocumentSnapshot
-) {
+    /** record complete event */
+    await events.recordCompleteEvent(snapshot);
+
+    logger.debug('Queue processed');
+  }
+);
+
+async function processWrite(snapshot: QueryDocumentSnapshot) {
   if (!snapshot.exists) {
-    logger.error("Process called with non-existent document");
+    logger.error('Process called with non-existent document');
     return;
   }
 
@@ -75,7 +76,7 @@ async function processWrite(
       error: isNotValid,
       startedAt: startedAtTimestamp,
       concludedAt: Timestamp.now(),
-      stage: TaskStage.ERROR
+      stage: TaskStage.ERROR,
     });
 
     return;
