@@ -2,6 +2,7 @@
   "name": "firestore-web-scraper-functions",
   "description": "",
   "main": "lib/index.js",
+  "type": "module",
   "scripts": {
     "prepare": "npm run build",
     "build": "npm run clean && npm run compile",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@types/jsdom": "^21.1.7",
+    "@vitest/coverage-v8": "^3.2.4",
     "concurrently": "^9.1.2",
     "firebase-tools": "^14.10.1",
     "rimraf": "^2.6.3",

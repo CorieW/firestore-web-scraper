@@ -1,4 +1,4 @@
-name: Test
+name: CI
 
 on:
   push:
@@ -30,3 +30,9 @@ jobs:
       - name: Run tests
         run: npx vitest run
         working-directory: functions
+
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
