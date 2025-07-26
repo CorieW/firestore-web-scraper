@@ -164,6 +164,15 @@ params:
     validationErrorMessage: Must be a valid Cloud Firestore collection
     required: true
 
+  - param: TEMPLATES_COLLECTION
+    label: Templates collection
+    description: The collection in which templates are stored.
+    type: string
+    default: templates
+    validationRegex: "^[^/]+(/[^/]+/[^/]+)*$"
+    validationErrorMessage: Must be a valid Cloud Firestore collection
+    required: false
+
   - param: LOG_LEVEL
     label: Log level
     description: The log level to use.

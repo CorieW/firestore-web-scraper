@@ -9,10 +9,11 @@ import {
 import { logger } from './logger'
 import config from './config'
 import * as events from './events'
-import { Task } from './types/Task'
+import { QUERIES_KEY, Task, TEMPLATE_KEY, URL_KEY } from './types/Task'
 import { validateTask } from './validation/task-validation'
 import { sendHttpRequestTo } from './http'
 import { TaskStage } from './types/TaskStage'
+import { Template } from './types/Template'
 
 let db: admin.firestore.Firestore
 let initialized = false
@@ -69,11 +70,12 @@ async function processWrite(snapshot: QueryDocumentSnapshot) {
   logger.info(`Validating task: ${snapshot.id}`)
 
   // The task is invalid, set the error and return
-  const isNotValid = validateTask(task) // is a message (invalid) or null (valid)
-  if (isNotValid) {
+  try {
+    validateTask(task)
+  } catch (err) {
     await doc.update({
       ...task,
-      error: isNotValid,
+      error: err.toString().replace(/^Error: /, ''),
       startedAt: startedAtTimestamp,
       concludedAt: Timestamp.now(),
       stage: TaskStage.ERROR,
@@ -82,7 +84,33 @@ async function processWrite(snapshot: QueryDocumentSnapshot) {
     return
   }
 
-  const { url, queries } = task
+  const template = task[TEMPLATE_KEY]
+
+  // When a template is provided, load in values
+  if (template) {
+    // load template from firestore
+    const templateDoc = await db.collection(config.templatesCollection).doc(template).get()
+    if (!templateDoc.exists) {
+      throw new Error(`Template not found: ${template}`)
+    }
+    const templateData = templateDoc.data() as Template
+
+    // replace url with template url, if provided
+    if (templateData[URL_KEY]) {
+      task[URL_KEY] = templateData[URL_KEY]
+    }
+
+    // merge template queries with task queries (task queries may be undefined, so we need to check)
+    if (templateData[QUERIES_KEY]) {
+      task[QUERIES_KEY] = [
+        ...templateData[QUERIES_KEY],
+        ...(Array.isArray(task[QUERIES_KEY]) ? task[QUERIES_KEY] : []),
+      ]
+    }
+  }
+
+  const url = task[URL_KEY]
+  const queries = task[QUERIES_KEY]
 
   // Set the task to processing
   logger.info(`Processing task: ${snapshot.id}`)
