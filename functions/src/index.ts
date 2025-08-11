@@ -1,4 +1,3 @@
-import * as admin from 'firebase-admin'
 import { Timestamp } from 'firebase-admin/firestore'
 import {
   FirestoreEvent,
@@ -13,23 +12,8 @@ import { QUERIES_KEY, Task, TEMPLATE_KEY, URL_KEY } from './types/Task'
 import { validateTask } from './validation/task-validation'
 import { sendHttpRequestTo } from './http'
 import { TaskStage } from './types/TaskStage'
-import { Template } from './types/Template'
-
-let db: admin.firestore.Firestore
-let initialized = false
-
-/**
- * Initializes Admin SDK, Firestore, and Eventarc
- */
-async function initialize() {
-  if (initialized === true) return
-  initialized = true
-  admin.initializeApp()
-  db = admin.firestore()
-
-  /** setup events */
-  events.setupEventChannel()
-}
+import { Template, TemplateData } from './types/Template'
+import { db, initialize } from './firebase'
 
 export const processQueue = onDocumentCreated(
   config.scrapeCollection,
@@ -64,8 +48,8 @@ async function processWrite(snapshot: QueryDocumentSnapshot) {
   logger.info(`Starting task: ${snapshot.id}`)
 
   const startedAtTimestamp = Timestamp.now()
-  const task: Task = snapshot.data() as Task
   const doc = db.collection(config.scrapeCollection).doc(snapshot.id)
+  let task: Task = snapshot.data() as Task
 
   logger.info(`Validating task: ${snapshot.id}`)
 
@@ -84,29 +68,11 @@ async function processWrite(snapshot: QueryDocumentSnapshot) {
     return
   }
 
-  const template = task[TEMPLATE_KEY]
-
   // When a template is provided, load in values
-  if (template) {
-    // load template from firestore
-    const templateDoc = await db.collection(config.templatesCollection).doc(template).get()
-    if (!templateDoc.exists) {
-      throw new Error(`Template not found: ${template}`)
-    }
-    const templateData = templateDoc.data() as Template
-
-    // replace url with template url, if provided
-    if (templateData[URL_KEY]) {
-      task[URL_KEY] = templateData[URL_KEY]
-    }
-
-    // merge template queries with task queries (task queries may be undefined, so we need to check)
-    if (templateData[QUERIES_KEY]) {
-      task[QUERIES_KEY] = [
-        ...templateData[QUERIES_KEY],
-        ...(Array.isArray(task[QUERIES_KEY]) ? task[QUERIES_KEY] : []),
-      ]
-    }
+  if (task[TEMPLATE_KEY]) {
+    const template = new Template(task[TEMPLATE_KEY])
+    await template.initialize()
+    task = template.mergeWithTask(task)
   }
 
   const url = task[URL_KEY]

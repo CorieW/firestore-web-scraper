@@ -1,7 +1,7 @@
-import { Template, URL_KEY } from '../types/Template'
+import { TemplateData, URL_KEY } from '../types/Template'
 import { validateQueriesAttribute } from './common'
 
-export function validateTemplate(template: Template): void {
+export function validateTemplate(template: TemplateData): void {
   if (!template) {
     throw new Error('Template is missing')
   }
