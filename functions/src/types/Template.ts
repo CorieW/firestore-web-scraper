@@ -53,8 +53,8 @@ export class Template implements TemplateData {
       throw new Error('Template not initialized')
     }
 
-    // replace url with template url, if provided
-    if (this[URL_KEY]) {
+    // replace url with template url, if provided (task url will take precedence if both are provided)
+    if (this[URL_KEY] && !task[URL_KEY]) {
       task[URL_KEY] = this[URL_KEY]
     }
 

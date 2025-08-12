@@ -39,7 +39,7 @@ export const processQueue = onDocumentCreated(
   }
 )
 
-async function processWrite(snapshot: QueryDocumentSnapshot) {
+export async function processWrite(snapshot: QueryDocumentSnapshot) {
   if (!snapshot.exists) {
     logger.error('Process called with non-existent document')
     return
@@ -70,9 +70,20 @@ async function processWrite(snapshot: QueryDocumentSnapshot) {
 
   // When a template is provided, load in values
   if (task[TEMPLATE_KEY]) {
-    const template = new Template(task[TEMPLATE_KEY])
-    await template.initialize()
-    task = template.mergeWithTask(task)
+    try {
+      const template = new Template(task[TEMPLATE_KEY])
+      await template.initialize()
+      task = template.mergeWithTask(task)
+    } catch (err) {
+      await doc.update({
+        ...task,
+        error: err.toString().replace(/^Error: /, ''),
+        startedAt: startedAtTimestamp,
+        concludedAt: Timestamp.now(),
+        stage: TaskStage.ERROR,
+      })
+      return
+    }
   }
 
   const url = task[URL_KEY]
