@@ -8,18 +8,15 @@ describe('Validation Tests - Complete Coverage', () => {
   describe('Task Validation - From Empty to Valid', () => {
     describe('Null/Undefined/Empty Tasks', () => {
       it('should reject null task', () => {
-        const result = validateTask(null as any)
-        expect(result).toBeTruthy()
+        expect(() => validateTask(null as any)).toThrow()
       })
 
       it('should reject undefined task', () => {
-        const result = validateTask(undefined)
-        expect(result).toBeTruthy()
+        expect(() => validateTask(undefined)).toThrow()
       })
 
       it('should reject empty object task', () => {
-        const result = validateTask({} as any)
-        expect(result).toBeTruthy()
+        expect(() => validateTask({} as any)).toThrow()
       })
     })
 
@@ -36,8 +33,7 @@ describe('Validation Tests - Complete Coverage', () => {
           ],
         } as any
 
-        const result = validateTask(task)
-        expect(result).toBeTruthy()
+        expect(() => validateTask(task)).toThrow()
       })
 
       it('should reject task missing queries field', () => {
@@ -45,8 +41,7 @@ describe('Validation Tests - Complete Coverage', () => {
           url: 'https://example.com',
         } as any
 
-        const result = validateTask(task)
-        expect(result).toBeTruthy()
+        expect(() => validateTask(task)).toThrow()
       })
 
       it('should reject task missing both URL and queries', () => {
@@ -54,8 +49,7 @@ describe('Validation Tests - Complete Coverage', () => {
           someOtherField: 'value',
         } as any
 
-        const result = validateTask(task)
-        expect(result).toBeTruthy()
+        expect(() => validateTask(task)).toThrow()
       })
     })
 
@@ -66,8 +60,7 @@ describe('Validation Tests - Complete Coverage', () => {
           queries: [],
         } as any
 
-        const result = validateTask(task)
-        expect(result).toBeTruthy()
+        expect(() => validateTask(task)).toThrow()
       })
 
       it('should reject task with boolean URL', () => {
@@ -76,8 +69,7 @@ describe('Validation Tests - Complete Coverage', () => {
           queries: [],
         } as any
 
-        const result = validateTask(task)
-        expect(result).toBeTruthy()
+        expect(() => validateTask(task)).toThrow()
       })
 
       it('should reject task with object URL', () => {
@@ -86,8 +78,7 @@ describe('Validation Tests - Complete Coverage', () => {
           queries: [],
         } as any
 
-        const result = validateTask(task)
-        expect(result).toBeTruthy()
+        expect(() => validateTask(task)).toThrow()
       })
 
       it('should reject task with non-array queries', () => {
@@ -96,8 +87,7 @@ describe('Validation Tests - Complete Coverage', () => {
           queries: 'not an array',
         } as any
 
-        const result = validateTask(task)
-        expect(result).toBeTruthy()
+        expect(() => validateTask(task)).toThrow()
       })
 
       it('should reject task with object queries', () => {
@@ -106,8 +96,7 @@ describe('Validation Tests - Complete Coverage', () => {
           queries: { id: 'test' },
         } as any
 
-        const result = validateTask(task)
-        expect(result).toBeTruthy()
+        expect(() => validateTask(task)).toThrow()
       })
 
       it('should reject task with null queries', () => {
@@ -116,8 +105,7 @@ describe('Validation Tests - Complete Coverage', () => {
           queries: null,
         } as any
 
-        const result = validateTask(task)
-        expect(result).toBeTruthy()
+        expect(() => validateTask(task)).toThrow()
       })
     })
 
@@ -135,8 +123,7 @@ describe('Validation Tests - Complete Coverage', () => {
           ],
         }
 
-        const result = validateTask(task)
-        expect(result).toBeTruthy()
+        expect(() => validateTask(task)).toThrow()
       })
 
       it('should reject task with whitespace-only URL', () => {
@@ -152,8 +139,7 @@ describe('Validation Tests - Complete Coverage', () => {
           ],
         }
 
-        const result = validateTask(task)
-        expect(result).toBeTruthy()
+        expect(() => validateTask(task)).toThrow()
       })
 
       it('should reject task with invalid URL format', () => {
@@ -169,8 +155,7 @@ describe('Validation Tests - Complete Coverage', () => {
           ],
         }
 
-        const result = validateTask(task)
-        expect(result).toBeTruthy()
+        expect(() => validateTask(task)).toThrow()
       })
 
       it('should reject task with malformed URL', () => {
@@ -186,8 +171,7 @@ describe('Validation Tests - Complete Coverage', () => {
           ],
         }
 
-        const result = validateTask(task)
-        expect(result).toBeTruthy()
+        expect(() => validateTask(task)).toThrow()
       })
 
       it('should reject task with URL containing only protocol', () => {
@@ -203,8 +187,7 @@ describe('Validation Tests - Complete Coverage', () => {
           ],
         }
 
-        const result = validateTask(task)
-        expect(result).toBeTruthy()
+        expect(() => validateTask(task)).toThrow()
       })
     })
 
@@ -215,8 +198,7 @@ describe('Validation Tests - Complete Coverage', () => {
           queries: [],
         }
 
-        const result = validateTask(task)
-        expect(result).toBeTruthy()
+        expect(() => validateTask(task)).toThrow()
       })
     })
 
@@ -234,8 +216,7 @@ describe('Validation Tests - Complete Coverage', () => {
           ],
         }
 
-        const result = validateTask(task)
-        expect(result).toBeNull()
+        expect(() => validateTask(task)).not.toThrow()
       })
 
       it('should accept task with HTTPS URL', () => {
@@ -251,8 +232,7 @@ describe('Validation Tests - Complete Coverage', () => {
           ],
         }
 
-        const result = validateTask(task)
-        expect(result).toBeNull()
+        expect(() => validateTask(task)).not.toThrow()
       })
 
       it('should accept task with URL containing port', () => {
@@ -268,8 +248,7 @@ describe('Validation Tests - Complete Coverage', () => {
           ],
         }
 
-        const result = validateTask(task)
-        expect(result).toBeNull()
+        expect(() => validateTask(task)).not.toThrow()
       })
 
       it('should accept task with URL containing path', () => {
@@ -285,8 +264,7 @@ describe('Validation Tests - Complete Coverage', () => {
           ],
         }
 
-        const result = validateTask(task)
-        expect(result).toBeNull()
+        expect(() => validateTask(task)).not.toThrow()
       })
 
       it('should accept task with URL containing query parameters', () => {
@@ -302,8 +280,7 @@ describe('Validation Tests - Complete Coverage', () => {
           ],
         }
 
-        const result = validateTask(task)
-        expect(result).toBeNull()
+        expect(() => validateTask(task)).not.toThrow()
       })
 
       it('should accept task with URL containing fragment', () => {
@@ -319,8 +296,7 @@ describe('Validation Tests - Complete Coverage', () => {
           ],
         }
 
-        const result = validateTask(task)
-        expect(result).toBeNull()
+        expect(() => validateTask(task)).not.toThrow()
       })
 
       it('should accept task with localhost URL', () => {
@@ -336,8 +312,7 @@ describe('Validation Tests - Complete Coverage', () => {
           ],
         }
 
-        const result = validateTask(task)
-        expect(result).toBeNull()
+        expect(() => validateTask(task)).not.toThrow()
       })
     })
 
@@ -355,8 +330,7 @@ describe('Validation Tests - Complete Coverage', () => {
           ],
         }
 
-        const result = validateTask(task)
-        expect(result).toBeNull()
+        expect(() => validateTask(task)).not.toThrow()
       })
 
       it('should accept task with multiple queries', () => {
@@ -385,8 +359,7 @@ describe('Validation Tests - Complete Coverage', () => {
           ],
         }
 
-        const result = validateTask(task)
-        expect(result).toBeNull()
+        expect(() => validateTask(task)).not.toThrow()
       })
 
       it('should accept task with complex queries', () => {
@@ -428,8 +401,7 @@ describe('Validation Tests - Complete Coverage', () => {
           ],
         }
 
-        const result = validateTask(task)
-        expect(result).toBeNull()
+        expect(() => validateTask(task)).not.toThrow()
       })
     })
   })
@@ -886,8 +858,7 @@ describe('Validation Tests - Complete Coverage', () => {
         ],
       }
 
-      const result = validateTask(task)
-      expect(result).toBeNull()
+      expect(() => validateTask(task)).not.toThrow()
     })
 
     it('should accept task with single query', () => {
@@ -903,8 +874,7 @@ describe('Validation Tests - Complete Coverage', () => {
         ],
       }
 
-      const result = validateTask(task)
-      expect(result).toBeNull()
+      expect(() => validateTask(task)).not.toThrow()
     })
 
     it('should accept task with attribute extraction query', () => {
@@ -921,8 +891,7 @@ describe('Validation Tests - Complete Coverage', () => {
         ],
       }
 
-      const result = validateTask(task)
-      expect(result).toBeNull()
+      expect(() => validateTask(task)).not.toThrow()
     })
 
     it('should accept task with mixed query types', () => {
@@ -964,8 +933,7 @@ describe('Validation Tests - Complete Coverage', () => {
         ],
       }
 
-      const result = validateTask(task)
-      expect(result).toBeNull()
+      expect(() => validateTask(task)).not.toThrow()
     })
 
     it('should accept task with all supported target types', () => {
@@ -1000,8 +968,7 @@ describe('Validation Tests - Complete Coverage', () => {
         ],
       }
 
-      const result = validateTask(task)
-      expect(result).toBeNull()
+      expect(() => validateTask(task)).not.toThrow()
     })
   })
 })

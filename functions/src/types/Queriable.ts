@@ -2,7 +2,6 @@ import { JSDOM, DOMWindow } from 'jsdom'
 // import * as xpath from 'xpath';
 
 import { Query, QueryType, TargetType } from './Query'
-import { logger } from '../logger'
 import { validateQuery } from '../validation/query-validation'
 
 export class Queriable {
