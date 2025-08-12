@@ -239,7 +239,7 @@ The template will be merged with the task document and the queries will be added
 
 ### Template Merging
 
-When a template is used in a task, the template's queries will be merged with the task's queries. Additionally, if a query in the template has the same id as a query in the task, the query in the task will take precedence.
+When you specify a template in a task, the queries from the template and the task are combined. If both the template and the task contain a query with the same `id`, the version from the task will override the one from the template. The same rule applies to the `url` field: if the task provides a `url`, it will take precedence over the template's `url`. This allows you to customize or override specific queries or the URL in your task while still reusing the rest of the template.
 
 **template document**
 ```json
@@ -265,7 +265,6 @@ When a template is used in a task, the template's queries will be merged with th
 **task document**
 ```json
 {
-  "url": "https://example.com",
   "queries": [
     {
       "id": "title",
