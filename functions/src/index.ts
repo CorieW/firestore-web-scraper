@@ -12,7 +12,7 @@ import { QUERIES_KEY, Task, TEMPLATE_KEY, URL_KEY } from './types/Task'
 import { validateTask } from './validation/task-validation'
 import { sendHttpRequestTo } from './http'
 import { TaskStage } from './types/TaskStage'
-import { Template, TemplateData } from './types/Template'
+import { Template } from './types/Template'
 import { db, initialize } from './firebase'
 
 export const processQueue = onDocumentCreated(
