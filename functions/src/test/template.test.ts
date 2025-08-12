@@ -9,7 +9,7 @@ const { mockGet, mockDoc, mockCollection } = vi.hoisted(() => {
   const mockGet = vi.fn()
   const mockDoc = vi.fn(() => ({ get: mockGet }))
   const mockCollection = vi.fn(() => ({ doc: mockDoc }))
-  
+
   return { mockGet, mockDoc, mockCollection }
 })
 

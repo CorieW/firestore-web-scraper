@@ -110,7 +110,9 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
         queries: 'not-an-array',
       }
 
-      expect(() => validateTask(task)).toThrow("Task queries ('queries') must be provided as an array")
+      expect(() => validateTask(task)).toThrow(
+        "Task queries ('queries') must be provided as an array"
+      )
     })
 
     it('should reject undefined task', () => {
