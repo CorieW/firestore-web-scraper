@@ -13,7 +13,7 @@ This extension allows you to automate web scraping tasks using Firestore. Simply
 ## ✨ Features
 
 - Scrape websites using Firestore documents.
-- Use multiple selectors to extract data (ID, Class, Tag, Attribute, XPath, CSS selector).
+- Use multiple selectors to extract data (ID, Class, Tag, Attribute, Text, CSS selector).
 - Extract data from the HTML, innerHTML, text, or attribute of an element.
 - Extract as much data as you like from a single Firestore document.
 
