@@ -4,10 +4,12 @@ updates:
     directory: "/functions"
     schedule:
       interval: "monthly"
-    open-pull-requests-limit: 5
+    reviewers:
+      - "CorieW"
     labels:
-      - "security"
       - "dependencies"
+      - "automated"
     commit-message:
-      prefix: "security"
+      prefix: "chore"
       include: "scope"
+    versioning-strategy: increase
