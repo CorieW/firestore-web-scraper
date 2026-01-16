@@ -60,8 +60,7 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
         ],
       }
 
-      const validationResult = validateTask(task)
-      expect(validationResult).toBeNull()
+      expect(() => validateTask(task)).not.toThrow()
     })
 
     it('should reject task with invalid URL', () => {
@@ -77,8 +76,7 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
         ],
       }
 
-      const validationResult = validateTask(task)
-      expect(validationResult).toBe("Task URL ('url') is not a valid URL")
+      expect(() => validateTask(task)).toThrow("Task URL ('url') is not a valid URL")
     })
 
     it('should reject task with missing URL', () => {
@@ -94,8 +92,7 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
         ],
       }
 
-      const validationResult = validateTask(task)
-      expect(validationResult).toBe("Task URL ('url') is not a valid URL")
+      expect(() => validateTask(task)).toThrow("Task URL ('url') is not a valid URL")
     })
 
     it('should reject task with no queries', () => {
@@ -104,8 +101,7 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
         queries: [],
       }
 
-      const validationResult = validateTask(task)
-      expect(validationResult).toBe("Task queries ('queries') are empty")
+      expect(() => validateTask(task)).toThrow("Task queries ('queries') are empty")
     })
 
     it('should reject task with non-array queries', () => {
@@ -114,13 +110,13 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
         queries: 'not-an-array',
       }
 
-      const validationResult = validateTask(task)
-      expect(validationResult).toBe("Task queries ('queries') must be provided as an array")
+      expect(() => validateTask(task)).toThrow(
+        "Task queries ('queries') must be provided as an array"
+      )
     })
 
     it('should reject undefined task', () => {
-      const validationResult = validateTask(undefined)
-      expect(validationResult).toBe('Task is missing')
+      expect(() => validateTask(undefined)).toThrow('Task is missing')
     })
   })
 
@@ -139,8 +135,7 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
       }
 
       // Validate the task
-      const validationResult = validateTask(task)
-      expect(validationResult).toBeNull()
+      expect(() => validateTask(task)).not.toThrow()
 
       // Execute the task
       const queriable = await sendHttpRequestTo(task.url)
@@ -166,8 +161,7 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
       }
 
       // Validate the task
-      const validationResult = validateTask(task)
-      expect(validationResult).toBeNull()
+      expect(() => validateTask(task)).not.toThrow()
 
       // Execute the task
       const queriable = await sendHttpRequestTo(task.url)
@@ -194,8 +188,7 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
       }
 
       // Validate the task
-      const validationResult = validateTask(task)
-      expect(validationResult).toBeNull()
+      expect(() => validateTask(task)).not.toThrow()
 
       // Execute the task
       const queriable = await sendHttpRequestTo(task.url)
@@ -263,8 +256,7 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
       }
 
       // Validate the task
-      const validationResult = validateTask(task)
-      expect(validationResult).toBeNull()
+      expect(() => validateTask(task)).not.toThrow()
 
       // Execute the task
       const queriable = await sendHttpRequestTo(task.url)
@@ -352,8 +344,7 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
       }
 
       // Validate the task
-      const validationResult = validateTask(task)
-      expect(validationResult).toBeNull()
+      expect(() => validateTask(task)).not.toThrow()
 
       // Execute the task
       const queriable = await sendHttpRequestTo(task.url)
@@ -411,8 +402,7 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
       }
 
       // Validate the task
-      const validationResult = validateTask(task)
-      expect(validationResult).toBeNull()
+      expect(() => validateTask(task)).not.toThrow()
 
       // Execute the task
       const queriable = await sendHttpRequestTo(task.url)
@@ -461,8 +451,7 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
         ],
       }
 
-      const validationResult = validateTask(task)
-      expect(validationResult).toBeNull()
+      expect(() => validateTask(task)).not.toThrow()
 
       const queriable = await sendHttpRequestTo(task.url)
       const results = queriable.multiQuery(task.queries)
@@ -512,8 +501,7 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
         ],
       }
 
-      const validationResult = validateTask(task)
-      expect(validationResult).toBeNull()
+      expect(() => validateTask(task)).not.toThrow()
 
       const queriable = await sendHttpRequestTo(task.url)
       const results = queriable.multiQuery(task.queries)
@@ -575,8 +563,7 @@ describe('Integration Tests - Complete Workflow with Test HTML Page', () => {
         ],
       }
 
-      const validationResult = validateTask(task)
-      expect(validationResult).toBeNull()
+      expect(() => validateTask(task)).not.toThrow()
 
       const queriable = await sendHttpRequestTo(task.url)
       const results = queriable.multiQuery(task.queries)

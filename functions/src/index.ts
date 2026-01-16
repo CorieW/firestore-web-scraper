@@ -1,4 +1,3 @@
-import * as admin from 'firebase-admin'
 import { Timestamp } from 'firebase-admin/firestore'
 import {
   FirestoreEvent,
@@ -9,26 +8,12 @@ import {
 import { logger } from './logger'
 import config from './config'
 import * as events from './events'
-import { Task } from './types/Task'
+import { QUERIES_KEY, Task, TEMPLATE_KEY, URL_KEY } from './types/Task'
 import { validateTask } from './validation/task-validation'
 import { sendHttpRequestTo } from './http'
 import { TaskStage } from './types/TaskStage'
-
-let db: admin.firestore.Firestore
-let initialized = false
-
-/**
- * Initializes Admin SDK, Firestore, and Eventarc
- */
-async function initialize() {
-  if (initialized === true) return
-  initialized = true
-  admin.initializeApp()
-  db = admin.firestore()
-
-  /** setup events */
-  events.setupEventChannel()
-}
+import { Template } from './types/Template'
+import { db, initialize } from './firebase'
 
 export const processQueue = onDocumentCreated(
   config.scrapeCollection,
@@ -54,7 +39,7 @@ export const processQueue = onDocumentCreated(
   }
 )
 
-async function processWrite(snapshot: QueryDocumentSnapshot) {
+export async function processWrite(snapshot: QueryDocumentSnapshot) {
   if (!snapshot.exists) {
     logger.error('Process called with non-existent document')
     return
@@ -63,17 +48,18 @@ async function processWrite(snapshot: QueryDocumentSnapshot) {
   logger.info(`Starting task: ${snapshot.id}`)
 
   const startedAtTimestamp = Timestamp.now()
-  const task: Task = snapshot.data() as Task
   const doc = db.collection(config.scrapeCollection).doc(snapshot.id)
+  let task: Task = snapshot.data() as Task
 
   logger.info(`Validating task: ${snapshot.id}`)
 
   // The task is invalid, set the error and return
-  const isNotValid = validateTask(task) // is a message (invalid) or null (valid)
-  if (isNotValid) {
+  try {
+    validateTask(task)
+  } catch (err) {
     await doc.update({
       ...task,
-      error: isNotValid,
+      error: err.toString().replace(/^Error: /, ''),
       startedAt: startedAtTimestamp,
       concludedAt: Timestamp.now(),
       stage: TaskStage.ERROR,
@@ -82,7 +68,26 @@ async function processWrite(snapshot: QueryDocumentSnapshot) {
     return
   }
 
-  const { url, queries } = task
+  // When a template is provided, load in values
+  if (task[TEMPLATE_KEY]) {
+    try {
+      const template = new Template(task[TEMPLATE_KEY])
+      await template.initialize()
+      task = template.mergeWithTask(task)
+    } catch (err) {
+      await doc.update({
+        ...task,
+        error: err.toString().replace(/^Error: /, ''),
+        startedAt: startedAtTimestamp,
+        concludedAt: Timestamp.now(),
+        stage: TaskStage.ERROR,
+      })
+      return
+    }
+  }
+
+  const url = task[URL_KEY]
+  const queries = task[QUERIES_KEY]
 
   // Set the task to processing
   logger.info(`Processing task: ${snapshot.id}`)
