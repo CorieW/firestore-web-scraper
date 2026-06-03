@@ -8,44 +8,86 @@
 
 ## 📝 About
 
-This extension allows you to automate web scraping tasks using Firestore. Simply add a document to a designated Firestore collection describing the website to scrape and the data to extract. The extension will process the task, perform the scraping, and update the document with the results, all managed directly from Firestore.
+This package allows you to automate web scraping tasks using Firestore. Simply add a document to a designated Firestore collection describing the website to scrape and the data to extract. The function will process the task, perform the scraping, and update the document with the results, all managed directly from Firestore.
 
 ## ✨ Features
 
 - Scrape websites using Firestore documents.
-- Use multiple selectors to extract data (ID, Class, Tag, Attribute, Text, CSS selector).
+- Use multiple selectors to extract data.
 - Extract data from the HTML, innerHTML, text, or attribute of an element.
 - Extract as much data as you like from a single Firestore document.
 
 ## 🚀 Usage
 
-You can read [PREINSTALL.md](https://github.com/CorieW/firestore-web-scraper/blob/master/PREINSTALL.md) and [POSTINSTALL.md](https://github.com/CorieW/firestore-web-scraper/blob/master/POSTINSTALL.md) for more detailed instructions on how to use this extension.
+Install the package in your Firebase Functions project and export the provided function from your Functions entry point:
 
-## 🛠️ Installation
+```bash
+pnpm add firestore-web-scraper
+```
 
-### Option 1: Firebase Console (Recommended)
+```ts
+import firestoreWebScraper from 'firestore-web-scraper'
 
-  - Go to the [Firebase Console](https://console.firebase.google.com/)
-  - Select your project
-  - Navigate to Extensions in the left sidebar
-  - Click Browse the catalog
-  - Search for "Firestore Web Scraper"
-  - Click Install
-  - Configure the extension parameters
-  - Deploy the extension
+const config = {
+  location: 'us-central1',
+  database: '(default)',
+  scrapeCollection: 'scraping',
+  logLevel: 'info',
+  fetchTimeoutMs: 5000,
+  runtimeOptions: {
+    timeoutSeconds: 120,
+    memory: '512MiB',
+    maxInstances: 10,
+  },
+}
 
-### Option 2: Firebase CLI
+export const processQueue = firestoreWebScraper(config)
+```
 
-   ```bash
-   # Clone the repository
-   git clone https://github.com/CorieW/firestore-web-scraper.git
+Create a document in the configured `SCRAPE_COLLECTION`:
 
-   # Install the extension
-   firebase ext:install ./firestore-web-scraper
+```ts
+{
+  url: 'https://example.com',
+  queries: [
+    {
+      id: 'heading',
+      type: 'selector',
+      value: 'h1',
+      target: 'text'
+    }
+  ]
+}
+```
 
-   # Deploy the extension
-   firebase deploy --only extensions
-   ```
+## 🛠️ Configuration
+
+| Config property    | Default       | Description                                                                                                                   |
+| ------------------ | ------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `location`         | `us-central1` | Cloud Functions trigger region.                                                                                               |
+| `database`         | `(default)`   | Firestore database ID.                                                                                                        |
+| `scrapeCollection` | `scraping`    | Collection path containing scraping task documents.                                                                           |
+| `logLevel`         | `info`        | Logger level: `debug`, `info`, `warn`, `error`, or `silent`.                                                                  |
+| `fetchTimeoutMs`   | `5000`        | Maximum time to wait for a scrape HTTP request before aborting.                                                               |
+| `runtimeOptions`   | `{}`          | Firebase v2 runtime/event options such as `timeoutSeconds`, `memory`, `minInstances`, `maxInstances`, `secrets`, and `retry`. |
+
+See the [docs](./docs) for deployment, permissions, configuration, and Firestore task details.
+
+Deploy your functions as usual:
+
+```bash
+firebase deploy --only functions
+```
+
+## 📦 Releasing
+
+This package uses Changesets. Add a changeset for user-facing changes:
+
+```bash
+pnpm changeset
+```
+
+The release workflow can be run manually from GitHub Actions. It opens or updates a version PR, and publishes to npm after that PR is merged.
 
 ## 🤝 Contributing
 
