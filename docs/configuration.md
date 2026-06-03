@@ -21,18 +21,28 @@ export const processQueue = firestoreWebScraper({
 
 The package does not read environment variables itself. If you want to use `.env` or Firebase environment configuration, read those values in your Functions app and pass them into `firestoreWebScraper`.
 
+## Validation
+
+Configuration is validated when `firestoreWebScraper()` is called. Invalid config throws before the Firebase trigger is registered.
+
+`scrapeCollection` must be a Firestore collection path. It may be a top-level collection such as `scraping`, or a nested collection pattern such as `users/{userId}/scraping`. It cannot start or end with `/`, contain empty path segments, point to a document path such as `users/{userId}`, use malformed wildcard segments, or include reserved Firestore ID segments such as `.`, `..`, or `__bad__`.
+
+Named `database` values must follow Firestore's database ID rules: lowercase letters, numbers, and hyphens only; 4-63 characters; first character a letter; last character a letter or number; and not UUID-like. `(default)` is also accepted.
+
+`runtimeOptions` is also checked for Firestore trigger fields owned by the package. Do not pass `document`, `database`, `namespace`, `region`, `eventType`, `eventFilters`, or `eventFilterPathPatterns` inside `runtimeOptions`.
+
 ## Options
 
-| Property           | Default       | Description                                                                                  |
-| ------------------ | ------------- | -------------------------------------------------------------------------------------------- |
-| [`location`][functions-locations] | `us-central1` | Cloud Functions and Firestore trigger region.                                                |
-| [`database`][firestore-manage-databases] | `(default)`   | Firestore database ID, such as `(default)` or a named database ID. |
-| `scrapeCollection` | `scraping`    | Collection path containing scraping task documents. See [Firestore Tasks](./firestore-tasks.md). |
-| `logLevel`         | `info`        | Logger level: `debug`, `info`, `warn`, `error`, or `silent`.                                 |
-| `fetchTimeoutMs`   | `5000`        | Maximum time to wait for a scrape HTTP request before aborting.                              |
-| [`runtimeOptions`][event-handler-options] | omitted       | Optional Firebase v2 runtime/event options.                                                  |
-| [`eventarcChannel`][event-handler-options-channel] | omitted       | Optional Eventarc channel name for extension-style custom events.                            |
-| [`selectedEvents`][event-handler-options-event-type] | omitted       | Optional selected Eventarc event types.                                                       |
+| Property                                             | Default       | Description                                                                                      |
+| ---------------------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------ |
+| [`location`][functions-locations]                    | `us-central1` | Cloud Functions and Firestore trigger region.                                                    |
+| [`database`][firestore-manage-databases]             | `(default)`   | Firestore database ID, such as `(default)` or a named database ID.                               |
+| `scrapeCollection`                                   | `scraping`    | Collection path containing scraping task documents. See [Firestore Tasks](./firestore-tasks.md). |
+| `logLevel`                                           | `info`        | Logger level: `debug`, `info`, `warn`, `error`, or `silent`.                                     |
+| `fetchTimeoutMs`                                     | `5000`        | Maximum time to wait for a scrape HTTP request before aborting.                                  |
+| [`runtimeOptions`][event-handler-options]            | omitted       | Optional Firebase v2 runtime/event options.                                                      |
+| [`eventarcChannel`][event-handler-options-channel]   | omitted       | Optional Eventarc channel name for extension-style custom events.                                |
+| [`selectedEvents`][event-handler-options-event-type] | omitted       | Optional selected Eventarc event types.                                                          |
 
 ## Runtime Options
 
