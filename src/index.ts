@@ -55,7 +55,6 @@ export function firestoreWebScraper(config: FirestoreWebScraperConfig = {}) {
           snapshot.data.data(),
           `Unhandled error occurred during processing: ${err.message}"`
         )
-        logger.error(err)
         return null
       }
 
@@ -73,7 +72,7 @@ export default firestoreWebScraper
 
 async function processWrite(snapshot: QueryDocumentSnapshot, config: Config) {
   if (!snapshot.exists) {
-    logger.error('Process called with non-existent document')
+    await events.recordErrorEvent(snapshot, 'Process called with non-existent document')
     return
   }
 
@@ -136,7 +135,6 @@ async function processWrite(snapshot: QueryDocumentSnapshot, config: Config) {
     })
 
     await events.recordErrorEvent(snapshot, err)
-    logger.error(err)
   }
 
   logger.info(`Task successful: ${snapshot.id}`)

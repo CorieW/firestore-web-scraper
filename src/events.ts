@@ -1,4 +1,5 @@
 import { Channel, getEventarc } from 'firebase-admin/eventarc'
+import { logger } from './logger'
 
 let eventChannel: Channel | undefined
 
@@ -32,6 +33,8 @@ export const recordProcessingEvent = async (change) => {
 }
 
 export const recordErrorEvent = async (doc, err) => {
+  logger.error(err)
+
   if (!eventChannel) return
 
   return eventChannel.publish({
