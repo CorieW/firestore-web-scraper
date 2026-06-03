@@ -30,7 +30,7 @@
     "test:vitest": "vitest --config config/vitest.config.ts",
     "test:vitest:run": "vitest run --config config/vitest.config.ts",
     "test:vitest:watch": "vitest --watch --config config/vitest.config.ts",
-    "format": "prettier --write \"src/**/*.{ts,js,json}\" --config config/.prettierrc --ignore-path config/.prettierignore",
+    "format": "prettier --write \"./**/*.{ts,js,json}\" --config config/.prettierrc --ignore-path config/.prettierignore",
     "format:check": "prettier --check \"src/**/*.{ts,js,json}\" --config config/.prettierrc --ignore-path config/.prettierignore",
     "pack:check": "pnpm pack --dry-run",
     "changeset": "changeset",

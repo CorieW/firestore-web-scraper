@@ -13,4 +13,9 @@ node_modules/
 *.log
 
 # Coverage reports
-coverage/ 
+coverage/
+
+# Vitepress output
+.vitepress/.temp/
+.vitepress/cache/
+.vitepress/dist/

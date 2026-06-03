@@ -11,8 +11,8 @@ export default defineConfig({
     coverage: {
       include: ['src/**'],
       exclude: ['lib/**', 'node_modules/**', '**/*.test.ts', '**/test/**'],
-      reporter: ['text', 'json', 'html', 'clover']
-    }
+      reporter: ['text', 'json', 'html', 'clover'],
+    },
   },
   resolve: {
     alias: {
