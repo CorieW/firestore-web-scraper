@@ -7,12 +7,15 @@ import {
 } from 'firebase-functions/v2/firestore'
 
 import { logger } from './logger'
-import config from './config'
+import { resolveConfig } from './config'
 import * as events from './events'
 import { Task } from './types/Task'
+import { Config, FirestoreWebScraperConfig } from './types/Config'
 import { validateTask } from './validation/task-validation'
 import { sendHttpRequestTo } from './http'
 import { TaskStage } from './types/TaskStage'
+
+export { LogLevel } from './logger'
 
 let db: admin.firestore.Firestore
 let initialized = false
@@ -20,41 +23,55 @@ let initialized = false
 /**
  * Initializes Admin SDK, Firestore, and Eventarc
  */
-async function initialize() {
+async function initialize(config: Config) {
   if (initialized === true) return
   initialized = true
   admin.initializeApp()
   db = admin.firestore()
 
   /** setup events */
-  events.setupEventChannel()
+  events.setupEventChannel(config.eventarcChannel, config.selectedEvents)
 }
 
-export const processQueue = onDocumentCreated(
-  config.scrapeCollection,
-  async (snapshot: FirestoreEvent<QueryDocumentSnapshot>) => {
-    await initialize()
-    logger.debug('Processing queue')
+export function firestoreWebScraper(config: FirestoreWebScraperConfig = {}) {
+  const resolvedConfig = resolveConfig(config)
+  logger.setLogLevel(resolvedConfig.logLevel)
 
-    try {
-      await processWrite(snapshot.data)
-    } catch (err) {
-      await events.recordErrorEvent(
-        snapshot.data.data(),
-        `Unhandled error occurred during processing: ${err.message}"`
-      )
-      logger.error(err)
-      return null
+  return onDocumentCreated(
+    {
+      ...(resolvedConfig.runtimeOptions ?? {}),
+      document: `${resolvedConfig.scrapeCollection}/{documentId}`,
+      database: resolvedConfig.database,
+      region: resolvedConfig.location,
+    },
+    async (snapshot: FirestoreEvent<QueryDocumentSnapshot>) => {
+      await initialize(resolvedConfig)
+      logger.debug('Processing queue')
+
+      try {
+        await processWrite(snapshot.data, resolvedConfig)
+      } catch (err) {
+        await events.recordErrorEvent(
+          snapshot.data.data(),
+          `Unhandled error occurred during processing: ${err.message}"`
+        )
+        logger.error(err)
+        return null
+      }
+
+      /** record complete event */
+      await events.recordCompleteEvent(snapshot)
+
+      logger.debug('Queue processed')
     }
+  )
+}
 
-    /** record complete event */
-    await events.recordCompleteEvent(snapshot)
+export const processQueue = firestoreWebScraper()
 
-    logger.debug('Queue processed')
-  }
-)
+export default firestoreWebScraper
 
-async function processWrite(snapshot: QueryDocumentSnapshot) {
+async function processWrite(snapshot: QueryDocumentSnapshot, config: Config) {
   if (!snapshot.exists) {
     logger.error('Process called with non-existent document')
     return
@@ -94,7 +111,7 @@ async function processWrite(snapshot: QueryDocumentSnapshot) {
 
   try {
     // Request the data from the URL
-    const queriable = await sendHttpRequestTo(url)
+    const queriable = await sendHttpRequestTo(url, config.fetchTimeoutMs)
 
     logger.debug(`Received data from ${url}: ${queriable.html}`)
     // Run the queries on the data

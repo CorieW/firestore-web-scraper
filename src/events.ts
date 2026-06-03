@@ -3,12 +3,12 @@ import { Channel, getEventarc } from 'firebase-admin/eventarc'
 let eventChannel: Channel | undefined
 
 /** setup events */
-export const setupEventChannel = () => {
-  eventChannel =
-    process.env.EVENTARC_CHANNEL &&
-    getEventarc().channel(process.env.EVENTARC_CHANNEL, {
-      allowedEventTypes: process.env.EXT_SELECTED_EVENTS,
-    })
+export const setupEventChannel = (eventarcChannel?: string, selectedEvents?: string) => {
+  eventChannel = eventarcChannel
+    ? getEventarc().channel(eventarcChannel, {
+        allowedEventTypes: selectedEvents,
+      })
+    : undefined
 }
 
 export const recordStartEvent = async (change) => {

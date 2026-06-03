@@ -1,11 +1,12 @@
 import { defineConfig } from 'vitest/config'
 
 export default defineConfig({
+  root: '.',
   test: {
     environment: 'node',
     testTimeout: 10000,
-    include: ['**/*.test.ts'],
-    exclude: ['node_modules/**', 'lib/**'],
+    include: ['src/**/*.test.ts'],
+    exclude: ['**/node_modules/**', 'lib/**', 'example/**'],
     setupFiles: ['./src/test/setup.ts'],
     coverage: {
       include: ['src/**'],
