@@ -1,0 +1,141 @@
+import * as admin from 'firebase-admin'
+import { Timestamp } from 'firebase-admin/firestore'
+import {
+  FirestoreEvent,
+  onDocumentCreated,
+  QueryDocumentSnapshot,
+} from 'firebase-functions/v2/firestore'
+
+import { logger } from './logger'
+import { resolveConfig } from './config'
+import * as events from './events'
+import { Task } from './types/Task'
+import { Config, FirestoreWebScraperConfig } from './types/Config'
+import { validateTask } from './validation/task-validation'
+import { sendHttpRequestTo } from './http'
+import { TaskStage } from './types/TaskStage'
+
+export { LogLevel } from './logger'
+
+let db: admin.firestore.Firestore
+let initialized = false
+
+/**
+ * Initializes Admin SDK, Firestore, and Eventarc
+ */
+async function initialize(config: Config) {
+  if (initialized === true) return
+  initialized = true
+  admin.initializeApp()
+  db = admin.firestore()
+
+  /** setup events */
+  events.setupEventChannel(config.eventarcChannel, config.selectedEvents)
+}
+
+export function firestoreWebScraper(config: FirestoreWebScraperConfig = {}) {
+  const resolvedConfig = resolveConfig(config)
+  logger.setLogLevel(resolvedConfig.logLevel)
+
+  return onDocumentCreated(
+    {
+      ...(resolvedConfig.runtimeOptions ?? {}),
+      document: `${resolvedConfig.scrapeCollection}/{documentId}`,
+      database: resolvedConfig.database,
+      region: resolvedConfig.location,
+    },
+    async (snapshot: FirestoreEvent<QueryDocumentSnapshot>) => {
+      await initialize(resolvedConfig)
+      logger.debug('Processing queue')
+
+      try {
+        await processWrite(snapshot.data, resolvedConfig)
+      } catch (err) {
+        await events.recordErrorEvent(
+          snapshot.data.data(),
+          `Unhandled error occurred during processing: ${err.message}"`
+        )
+        return null
+      }
+
+      /** record complete event */
+      await events.recordCompleteEvent(snapshot)
+
+      logger.debug('Queue processed')
+    }
+  )
+}
+
+export const processQueue = firestoreWebScraper()
+
+export default firestoreWebScraper
+
+async function processWrite(snapshot: QueryDocumentSnapshot, config: Config) {
+  if (!snapshot.exists) {
+    await events.recordErrorEvent(snapshot, 'Process called with non-existent document')
+    return
+  }
+
+  logger.info(`Starting task: ${snapshot.id}`)
+
+  const startedAtTimestamp = Timestamp.now()
+  const task: Task = snapshot.data() as Task
+  const doc = db.collection(config.scrapeCollection).doc(snapshot.id)
+
+  logger.info(`Validating task: ${snapshot.id}`)
+
+  // The task is invalid, set the error and return
+  const isNotValid = validateTask(task) // is a message (invalid) or null (valid)
+  if (isNotValid) {
+    await doc.update({
+      ...task,
+      error: isNotValid,
+      startedAt: startedAtTimestamp,
+      concludedAt: Timestamp.now(),
+      stage: TaskStage.ERROR,
+    })
+
+    return
+  }
+
+  const { url, queries } = task
+
+  // Set the task to processing
+  logger.info(`Processing task: ${snapshot.id}`)
+  await doc.update({
+    ...task,
+    startedAt: startedAtTimestamp,
+    stage: TaskStage.PROCESSING,
+  })
+
+  try {
+    // Request the data from the URL
+    const queriable = await sendHttpRequestTo(url, config.fetchTimeoutMs)
+
+    logger.debug(`Received data from ${url}: ${queriable.html}`)
+    // Run the queries on the data
+    const data = queriable.multiQuery(queries)
+
+    // Set the data in the Firestore document
+    await doc.update({
+      ...task,
+      data: { ...data },
+      startedAt: startedAtTimestamp,
+      concludedAt: Timestamp.now(),
+      stage: TaskStage.SUCCESS,
+    })
+  } catch (err) {
+    // Something went wrong, set the error and return
+    await doc.update({
+      ...task,
+      error: err.toString().replace(/^Error: /, ''),
+      startedAt: startedAtTimestamp,
+      concludedAt: Timestamp.now(),
+      stage: TaskStage.ERROR,
+    })
+
+    await events.recordErrorEvent(snapshot, err)
+  }
+
+  logger.info(`Task successful: ${snapshot.id}`)
+}

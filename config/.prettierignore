@@ -1,0 +1,21 @@
+# Test reports
+test-report.junit.xml
+
+# Build outputs
+lib/
+node_modules/
+
+# Generated files
+*.min.js
+*.min.css
+
+# Logs
+*.log
+
+# Coverage reports
+coverage/
+
+# Vitepress output
+.vitepress/.temp/
+.vitepress/cache/
+.vitepress/dist/
