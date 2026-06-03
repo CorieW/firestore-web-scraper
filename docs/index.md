@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /deployment.html
+      link: /setup.html
 ---
 
 ## About

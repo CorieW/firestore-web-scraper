@@ -1,12 +1,17 @@
-# Deployment
+# Setup
 
 ## Install
 
 Install the package in your Firebase Functions project:
 
 ```bash
-cd functions
-pnpm add firestore-web-scraper
+npm install @coriew/firestore-web-scraper
+```
+
+OR install from pnpm:
+
+```bash
+pnpm add @coriew/firestore-web-scraper
 ```
 
 Export a function from your Functions entry point:

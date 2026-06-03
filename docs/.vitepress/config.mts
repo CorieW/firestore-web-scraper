@@ -18,7 +18,7 @@ export default defineConfig({
       provider: 'local',
     },
     nav: [
-      { text: 'Guide', link: '/deployment.html' },
+      { text: 'Setup', link: '/setup.html' },
       { text: 'Configuration', link: '/configuration.html' },
       { text: 'Tasks', link: '/firestore-tasks.html' },
       { text: 'Types', link: '/types/query-types.html' },
@@ -28,7 +28,7 @@ export default defineConfig({
         text: 'Get Started',
         items: [
           { text: 'Overview', link: '/' },
-          { text: 'Deployment', link: '/deployment.html' },
+          { text: 'Setup', link: '/setup.html' },
         ],
       },
       {
